@@ -1,0 +1,45 @@
+version: "3.1"
+
+nlu:
+- intent: solicitar_vinculacion_especial
+  examples: |
+    - como se hace la vinculacion especial de docentes
+    - necesito el proceso para vinculacion especial
+    - me explicas el flujo de vinculacion especial
+    - como inicia la vinculacion especial docente
+    - cual es el procedimiento de vinculacion especial
+- intent: informar_tipo_docente
+  examples: |
+    - el docente es hcp
+    - es un docente hch
+    - vamos con mto
+    - el caso es tco
+    - es docente antiguo
+- intent: informar_necesidades_docentes
+  examples: |
+    - necesitamos dos docentes para posgrado
+    - se requieren 3 hcp en pregrado
+    - son 4 docentes para el semestre
+    - el proyecto reporta 1 docente tco
+    - el numero es cinco docentes
+- intent: informar_presupuesto
+  examples: |
+    - el presupuesto estimado es 20 millones
+    - tenemos 15000000 para este proceso
+    - el valor presupuestal es de 8 millones
+    - presupuesto aprobado por 12000000
+    - el monto disponible es 10000000
+- intent: informar_estado_documentos
+  examples: |
+    - faltan soportes de hoja de vida
+    - los documentos ya estan completos
+    - hay observaciones en certificaciones
+    - la documentacion fue devuelta por talento humano
+    - todo cumple sin observaciones
+- intent: confirmar_cierre_flujo
+  examples: |
+    - entendido gracias
+    - ya me quedo claro
+    - perfecto eso era todo
+    - listo no tengo mas dudas
+    - gracias con eso finalizamos

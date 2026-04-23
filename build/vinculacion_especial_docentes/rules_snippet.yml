@@ -1,0 +1,42 @@
+version: "3.1"
+
+rules:
+- rule: Iniciar flujo vinculacion especial
+  condition:
+  - active_loop: null
+  steps:
+  - intent: solicitar_vinculacion_especial
+  - action: utter_inicio_vinculacion
+- rule: Transicion tipo docente
+  condition:
+  - slot tipo_docente disponible
+  steps:
+  - intent: informar_tipo_docente
+  - action: utter_reporte_necesidades
+- rule: Transicion necesidades
+  condition:
+  - presupuesto no definido
+  steps:
+  - intent: informar_necesidades_docentes
+  - action: utter_validacion_presupuesto
+- rule: Transicion presupuesto
+  condition:
+  - estado_documentacion no definido
+  steps:
+  - intent: informar_presupuesto
+  - action: utter_revision_documental
+- rule: Cierre flujo vinculacion
+  condition:
+  - active_loop: null
+  steps:
+  - intent: confirmar_cierre_flujo
+  - action: utter_cierre_vinculacion
+- rule: Ejemplo intercalado multiple
+  condition:
+  - active_loop: null
+  - slot_was_set: tipo_docente
+  steps:
+  - intent: informar_tipo_docente
+  - action: utter_reporte_necesidades
+  - intent: informar_necesidades_docentes
+  - action: utter_validacion_presupuesto

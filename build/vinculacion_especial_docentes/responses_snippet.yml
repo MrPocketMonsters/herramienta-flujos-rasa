@@ -1,0 +1,33 @@
+version: "3.1"
+
+responses:
+  utter_inicio_vinculacion:
+    - text: "Te explico el proceso de vinculacion especial paso a paso. Primero validamos si el docente es antiguo o nuevo."
+    - text: "Te explico como funciona la vinculacion especial y empezamos por identificar el tipo de docente."
+    - text: "Vamos a revisar el flujo de vinculacion especial comenzando por tipo de docente."
+    - text: "Iniciemos con el primer paso de vinculacion especial: clasificar el tipo de docente."
+  utter_tipo_docente:
+    - text: "Para continuar necesito identificar si el caso corresponde a HCP HCH MTO o TCO y si es docente antiguo o nuevo."
+    - text: "Para este paso define el tipo de docente: HCP HCH MTO o TCO."
+    - text: "Clasifiquemos el docente segun la tipologia institucional."
+    - text: "Indica el tipo de docente para aplicar la ruta correcta."
+  utter_reporte_necesidades:
+    - text: "El proyecto curricular debe remitir numero de docentes tipo y nivel academico requerido para el semestre."
+    - text: "Debes reportar cantidad de docentes tipologia y nivel (pregrado/posgrado)."
+    - text: "Este paso exige consolidar numero de docentes y nivel de vinculacion."
+    - text: "Remite el reporte con tipo de docente cantidad y nivel academico."
+  utter_validacion_presupuesto:
+    - text: "Con esa informacion se valida el presupuesto con el profesional financiero antes de continuar."
+    - text: "Ahora se valida disponibilidad presupuestal con el area financiera."
+    - text: "El siguiente paso es la validacion del presupuesto reportado."
+    - text: "Se revisa el monto y su consistencia con el plan semestral."
+  utter_revision_documental:
+    - text: "Luego se revisa la documentacion del docente y se notifican observaciones para ajuste cuando aplique."
+    - text: "En este punto se verifican soportes y se registran observaciones si hay incumplimientos."
+    - text: "Se valida la documentacion y se devuelve para ajuste en caso de inconsistencias."
+    - text: "La revision documental confirma cumplimiento o genera observaciones."
+  utter_cierre_vinculacion:
+    - text: "Con esto termina la orientacion del flujo. Si quieres puedo indicarte a que dependencia escalar el caso."
+    - text: "Listo cerramos el flujo informativo; puedo ayudarte con la derivacion correspondiente."
+    - text: "Hemos completado la explicacion del proceso. Te indico el siguiente canal si lo necesitas."
+    - text: "Ya tienes la ruta completa; dime si deseas escalar con la dependencia responsable."

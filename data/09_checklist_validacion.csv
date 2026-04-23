@@ -1,0 +1,12 @@
+﻿item,descripcion,estado,observaciones
+Numero del criterio de validacion,Criterio que debe cumplirse antes de implementar,Estado del criterio (pendiente en curso listo),Notas de evidencia o hallazgos
+1,El flujo tiene objetivo verificable y acotado,pendiente,
+2,La maquina de estados esta completa y sin bucles no controlados,pendiente,
+3,Cada intent tiene minimo 5 ejemplos realistas,pendiente,
+4,Las entidades/slots obligatorias tienen estrategia de repregunta,pendiente,
+5,Cada estado tiene respuesta predefinida utilizable,pendiente,
+6,Todas las respuestas apuntan a una fuente verificable,pendiente,
+7,Se definio que va en rules y que va en stories,pendiente,
+8,Se definio criterio de cierre y cierre operativo,pendiente,
+9,Se definio accion de contingencia si una fuente falla,pendiente,
+10,Se valido que el flujo no interfiere indebidamente con flujos existentes,pendiente,

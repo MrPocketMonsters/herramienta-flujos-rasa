@@ -1,0 +1,4 @@
+﻿flujo_id,story_name,secuencia,notas
+Identificador del flujo,Nombre de la historia,Secuencia ordenada de intent y action separada por 'mayor que',Comentario para aclarar el objetivo de la historia
+vinculacion_especial_docentes,flujo completo vinculacion,intent:solicitar_vinculacion_especial > action:utter_inicio_vinculacion > intent:informar_tipo_docente > action:utter_reporte_necesidades > intent:informar_necesidades_docentes > action:utter_validacion_presupuesto > intent:informar_presupuesto > action:utter_revision_documental > intent:informar_estado_documentos > action:utter_cierre_vinculacion > intent:confirmar_cierre_flujo > action:action_despedida,Historia principal completa
+vinculacion_especial_docentes,flujo con repregunta tipo docente,intent:solicitar_vinculacion_especial > action:utter_inicio_vinculacion > action:utter_tipo_docente > intent:informar_tipo_docente > action:utter_reporte_necesidades,Historia de correccion por dato faltante

@@ -1,0 +1,6 @@
+﻿flujo_id,dato,fuente_tipo,fuente_ubicacion,campo_tabla,criterio_vigencia,responsable,accion_si_no_disponible
+Identificador del flujo,Nombre del dato requerido por el flujo,Tipo de fuente (tabla excel formulario sistema),Ubicacion exacta de la fuente,Campo columna o tabla de donde se toma el dato,Regla para considerar el dato vigente,Area o rol responsable de mantener la fuente,Accion de contingencia si la fuente no esta disponible
+vinculacion_especial_docentes,Tipo de docente,Excel OneDrive,OneDrive/Proyectos/VinculacionEspecial.xlsx,Columna tipo_docente,Version vigente del semestre,Coordinacion academica,Emitir respuesta de contingencia y solicitar confirmacion por correo
+vinculacion_especial_docentes,Numero y nivel de docentes,Formulario institucional,Formulario interno de necesidades,numero_docentes nivel,Registro aprobado por proyecto curricular,Proyecto curricular,Repreguntar y no avanzar de estado
+vinculacion_especial_docentes,Presupuesto,Plantilla presupuestal,Drive financiero/PlantillaPresupuesto.xlsx,monto_total,Validado por profesional financiero,Area financiera,Derivar a responsable financiero
+vinculacion_especial_docentes,Estado documental,Sistema de resoluciones,Plataforma resoluciones/estado documental,estado_documentacion,Ultima revision registrada,Talento humano,Informar observacion y mantener flujo en revision documental

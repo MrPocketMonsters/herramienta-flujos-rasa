@@ -1,0 +1,3 @@
+﻿Este libro de trabajo sirve para disenar y documentar nuevos flujos conversacionales del chatbot sin editar codigo. Cada hoja captura una parte del diseno funcional para que luego un script de compilacion convierta esa informacion en snippets que se acercan mucho a los archivos de configuracion usados por el asistente virtual (RASA).
+Uso recomendado: diligenciar todas las hojas en orden y validar con el checklist de viabilidad en guia administrativa.
+"Regla de diligenciamiento por hoja: fila 1 descripcion de la hoja, fila 2 encabezados, fila 3 definicion de columnas, fila 4 en adelante datos. La eliminación de filas 1 y 3 está prohibida."

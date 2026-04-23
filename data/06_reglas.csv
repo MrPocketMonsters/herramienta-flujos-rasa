@@ -1,0 +1,8 @@
+﻿flujo_id,rule_name,condicion,steps_intents,steps_actions,notas
+Identificador del flujo,Nombre legible de la regla,Una o varias condiciones separadas por mayor que,Secuencia de intents separados por 'mayor que',Secuencia de actions separadas por 'mayor que' (se intercalan por posicion con intents),Comentario o aclaracion para implementacion
+vinculacion_especial_docentes,Iniciar flujo vinculacion especial,active_loop: null,solicitar_vinculacion_especial,utter_inicio_vinculacion,Regla de entrada al flujo
+vinculacion_especial_docentes,Transicion tipo docente,slot tipo_docente disponible,informar_tipo_docente,utter_reporte_necesidades,Pasa al paso de reporte de necesidades
+vinculacion_especial_docentes,Transicion necesidades,presupuesto no definido,informar_necesidades_docentes,utter_validacion_presupuesto,Avanza a validacion de presupuesto
+vinculacion_especial_docentes,Transicion presupuesto,estado_documentacion no definido,informar_presupuesto,utter_revision_documental,Avanza a revision documental
+vinculacion_especial_docentes,Cierre flujo vinculacion,active_loop: null,confirmar_cierre_flujo,utter_cierre_vinculacion,Regla de salida
+vinculacion_especial_docentes,Ejemplo intercalado multiple,active_loop: null > slot_was_set: tipo_docente,informar_tipo_docente > informar_necesidades_docentes,utter_reporte_necesidades > utter_validacion_presupuesto,Genera steps intercalados intent accion intent accion
