@@ -119,6 +119,24 @@ La expectativa es que esa persona aporte:
 
 Después, una persona administradora traduce y normaliza esos insumos al formato técnico que el sistema necesita.
 
+## Referencia administrativa clave
+
+Este repositorio se apoya en la guía [manual_flujos_adm.md](manual_flujos_adm.md), que define el marco operativo para áreas no técnicas y para el equipo administrador del sistema.
+
+Puntos clave que aporta el manual:
+
+- Diferencia explícita entre procesamiento determinístico (`rules`, validaciones, transiciones por estado) y probabilístico (clasificación de lenguaje natural e identificación de entidades).
+- Responsabilidad funcional sobre la calidad de datos: el asistente no inventa conocimiento; la precisión depende de las fuentes institucionales actualizadas.
+- Matriz de definición funcional para nuevos flujos: objetivo acotado, máquina de estados, intenciones de transición, entidades/slots, reglas e historias, respuestas, fuentes de información y criterios de cierre.
+- Criterios de calidad: trazabilidad, cobertura de ejemplos, delimitación del alcance y manejo de contingencias/fallback.
+
+Recomendación de uso del manual junto con este repo:
+
+1. Usar el manual para diseñar y validar el flujo en lenguaje natural desde negocio.
+2. Diligenciar [data/flujo_conversacional.xlsx](data/flujo_conversacional.xlsx) con esa definición.
+3. Exportar a CSV y compilar snippets.
+4. Ejecutar la revisión técnica final por parte del administrador.
+
 ## Salida generada
 
 El resultado del proceso de compilación puede incluir:

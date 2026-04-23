@@ -61,14 +61,20 @@ El compilador `tools/compilar_flujo_csv.py` lee los CSV de esta carpeta, ignora 
 
 1. Diligenciar las 9 hojas del workbook.
 2. Validar internamente con el checklist.
-3. Ejecutar el compilador:
+3. Exportar el workbook a CSV:
 
 ```bash
-python3 tools/compilar_flujo_csv.py --workbook plantillas/flujo_conversacional/flujo_conversacional.xlsx --output-dir salida_flujos
+python3 tools/xlsx_a_csv.py --workbook data/flujo_conversacional.xlsx --output-dir data
 ```
 
-4. Revisar salida en `salida_flujos/<flujo_id>/`.
-5. Trasladar snippets a:
+4. Ejecutar el compilador sobre CSV:
+
+```bash
+python3 tools/compilar_flujo_csv.py --csv-dir data --output-dir build
+```
+
+5. Revisar salida en `build/<flujo_id>/`.
+6. Trasladar snippets a:
    - `data/nlu.yml`
    - `data/rules.yml`
    - `data/stories.yml`
