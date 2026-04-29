@@ -161,7 +161,6 @@ El binario final estará en `src-tauri/target/release/herramienta-flujos-rasa` (
 4. La app guarda los cambios en los CSV dentro de `data/`, que luego se pueden usar para alimentar el sistema Rasa.
 
 Para detalles sobre cómo se cargan los CSV en tiempo de ejecución, ver [docs/TAURI_EXTERNAL_DATA.md](docs/TAURI_EXTERNAL_DATA.md).
-```
 
 La app de escritorio se compila desde `src-tauri/` y toma los archivos estáticos desde `web/`.
 
