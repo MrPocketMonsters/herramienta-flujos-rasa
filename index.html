@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestor de Flujos Conversacionales</title>
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+	<main class="page">
+		<header class="topbar fade-up">
+			<div class="branding">
+				<span class="branding-badge" aria-hidden="true">FC</span>
+				<div>
+					<h1>Gestor de Flujos Conversacionales</h1>
+					<p class="subtext">Selector de flujos y registro de informacion general del proceso.</p>
+				</div>
+			</div>
+		</header>
+
+		<section class="grid cols-2 fade-up delay-1">
+			<article class="card" data-context-source>
+				<h2>1) Formulario de flujo</h2>
+				<p class="helper">Campos del resumen general del flujo.</p>
+
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-group">
+						<label for="flujo-id">Identificador del flujo</label>
+						<input id="flujo-id" type="text" value="vinculacion_especial_docentes" data-help-title="Identificador del flujo" data-help-type="Campo con impacto directo" data-help-copy="Usa un identificador unico, corto y estable para todo el proceso." data-help-note="Este valor permite reconocer el flujo en todos los modulos.">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-group">
+						<label for="objetivo">Objetivo</label>
+						<textarea id="objetivo" data-help-title="Objetivo" data-help-type="Campo descriptivo" data-help-copy="Describe el resultado concreto que debe lograr el flujo." data-help-note="Debe ser claro y verificable.">Orientar el proceso administrativo de vinculacion especial de docentes</textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-group">
+						<label for="alcance">Alcance</label>
+						<textarea id="alcance" data-help-title="Alcance" data-help-type="Campo descriptivo" data-help-copy="Resume el proceso que cubre el flujo de principio a fin." data-help-note="Evita mezclar procesos no relacionados.">Flujo informativo paso a paso desde consulta inicial hasta cierre con orientacion final</textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-group">
+						<label for="in-scope">In scope</label>
+						<textarea id="in-scope" data-help-title="In scope" data-help-type="Campo descriptivo" data-help-copy="Temas que si resuelve el flujo." data-help-note="Esta lista define lo que el usuario puede esperar.">Identificacion de tipo docente y validaciones de presupuesto/documentos</textarea>
+					</div>
+					<div class="input-group">
+						<label for="out-scope">Out scope</label>
+						<textarea id="out-scope" data-help-title="Out scope" data-help-type="Campo descriptivo" data-help-copy="Temas que no debe resolver este flujo." data-help-note="Ayuda a evitar respuestas fuera del alcance definido.">No incluye radicacion en sistemas externos ni aprobaciones automaticas</textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-group">
+						<label for="criterio-cierre">Criterio de cierre</label>
+						<textarea id="criterio-cierre" data-help-title="Criterio de cierre" data-help-type="Campo con impacto directo" data-help-copy="Condicion para dar la conversacion por finalizada." data-help-note="Debe indicar cuando el usuario queda orientado o derivado.">Usuario confirma que comprendio el procedimiento o solicita derivacion</textarea>
+					</div>
+					<div class="input-group">
+						<label for="criterio-cierre-operativo">Criterio de cierre operativo</label>
+						<textarea id="criterio-cierre-operativo" data-help-title="Criterio de cierre operativo" data-help-type="Campo con impacto directo" data-help-copy="Define como validar que el flujo funciono operativamente." data-help-note="Puede incluir control de bucles, registro y respuesta final emitida.">Interaccion registrada sin bucles y con respuesta final emitida</textarea>
+					</div>
+				</div>
+
+				<div class="row" style="margin-top: 8px;">
+					<button class="btn btn-soft" data-demo-action="Nuevo flujo">Nuevo flujo</button>
+					<button class="btn btn-primary" data-demo-action="Guardar datos del flujo">Guardar flujo</button>
+				</div>
+			</article>
+
+			<article class="card context-rail" data-context-rail data-default-title="Ayuda contextual" data-default-copy="Enfoca un campo para ver una sugerencia breve y precisa." data-default-note="La ayuda cambia mientras el usuario navega entre los campos.">
+				<p class="context-eyebrow">Ayuda contextual</p>
+				<h2 class="context-title" data-context-title>Identificador del flujo</h2>
+				<div class="context-note" style="margin-bottom: 10px; background: #eef5ff; color: #24486b;" data-context-type>Campo con impacto directo</div>
+				<p class="context-copy" data-context-copy>Usa un identificador unico, corto y estable para todo el proceso.</p>
+				<div class="context-note" data-context-note>Este valor permite reconocer el flujo en todos los modulos.</div>
+
+				<ul class="timeline context-summary" style="margin-top: 14px;">
+					<li>
+						<span class="timeline-marker">1</span>
+						<div>Los campos descriptivos explican el alcance y la finalidad del flujo.</div>
+					</li>
+					<li>
+						<span class="timeline-marker">2</span>
+						<div>Los campos operativos afectan la compilacion y la salida generada.</div>
+					</li>
+					<li>
+						<span class="timeline-marker">3</span>
+						<div>Usa esta ayuda para distinguir redaccion descriptiva de campos de control.</div>
+					</li>
+				</ul>
+			</article>
+		</section>
+
+		<section class="modules-scroll fade-up delay-2" style="margin-top: 16px;">
+			<article class="card">
+				<h3>2) Estados</h3>
+				<p class="helper">Secuencia de estados, entradas, salidas y repreguntas.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<a class="btn btn-primary" href="html/estados.html">Abrir modulo</a>
+				</div>
+			</article>
+			<article class="card">
+				<h3>3) Intenciones</h3>
+				<p class="helper">Intenciones con ejemplos de lenguaje real del usuario.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<a class="btn btn-primary" href="html/intentenciones.html">Abrir modulo</a>
+				</div>
+			</article>
+			<article class="card">
+				<h3>4) Entidades y Slots</h3>
+				<p class="helper">Entidades y slots que puede capturar el sistema.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de entidades">Abrir modulo</button>
+				</div>
+			</article>
+			<article class="card">
+				<h3>5) Respuestas</h3>
+				<p class="helper">Respuestas que el sistema puede proporcionar al usuario.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de respuestas">Abrir modulo</button>
+				</div>
+			</article>
+			<article class="card">
+				<h3>6) Reglas</h3>
+				<p class="helper">Reglas determinísticas que definen el comportamiento del sistema.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de reglas">Abrir modulo</button>
+				</div>
+			</article>
+			<article class="card">
+				<h3>7) Historias</h3>
+				<p class="helper">Ejemplos de secuencias de estado probables que el usuario puede seguir en este flujo.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de historias">Abrir modulo</button>
+				</div>
+			</article>
+			<article class="card">
+				<h3>8) Fuentes de Datos</h3>
+				<p class="helper">Fuentes de datos que el sistema puede utilizar.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Registros: 6</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de fuentes de datos">Abrir modulo</button>
+				</div>
+			</article>
+			<article class="card">
+				<h3>9) Checklist de validación</h3>
+				<p class="helper">Checklist para validar la implementación del flujo.</p>
+				<div class="row" style="justify-content: space-between; margin-top: 8px;">
+					<span class="pill info">Revisados: 2</span>
+					<button class="btn btn-primary" data-demo-action="Abrir modulo de checklist de validación">Abrir modulo</button>
+				</div>
+			</article>
+		</section>
+
+		<section class="card fade-up delay-3" style="margin-top: 16px;">
+			<div class="row" style="justify-content: space-between; align-items: center;">
+				<h2 class="section-title" style="margin: 0;">Flujos existentes (3)</h2>
+			</div>
+
+			<div id="tabla-recientes" class="table-wrap" style="margin-top: 10px;">
+				<table>
+					<thead>
+						<tr>
+							<th>Identificador del flujo</th>
+							<th>Objetivo</th>
+              <th>Accion</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>vinculacion_especial_docentes</td>
+							<td>Orientar el proceso administrativo de vinculacion especial de docentes</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar flujo">Editar</button></td>
+						</tr>
+						<tr>
+							<td>costos_posgrados_2026</td>
+							<td>Informar costos y condiciones economicas de los programas de posgrado</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar flujo">Editar</button></td>
+						</tr>
+						<tr>
+							<td>admisiones_movilidad</td>
+							<td>Orientar requisitos, tiempos y pasos de admision y movilidad academica</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar flujo">Editar</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="card fade-up delay-3" style="margin-top: 16px;">
+			<div class="row" style="justify-content: flex-end;">
+				<a class="btn btn-primary" href="html/estados.html">Siguiente: Estados</a>
+			</div>
+		</section>
+
+		<footer class="helper" style="margin-top: 16px; text-align: center;">
+			Aplicacion local sin servidor. <span data-year></span>
+		</footer>
+	</main>
+
+	<script src="js/mockups.js"></script>
+</body>
+</html>

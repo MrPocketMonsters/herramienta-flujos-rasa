@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Intenciones</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar fade-up">
+      <div class="branding">
+        <span class="branding-badge" aria-hidden="true">I</span>
+        <div>
+          <h1>Registro de Intenciones</h1>
+          <p class="subtext">Registro natural de intenciones y ejemplos de preguntas reales de usuarios.</p>
+        </div>
+      </div>
+      <a class="btn btn-soft" href="../index.html">Volver al selector</a>
+    </header>
+
+    <section class="grid cols-2 fade-up delay-1">
+      <article class="card" data-context-source>
+        <h2>3) Registro de intencion</h2>
+        <p class="helper">Completa la intencion y sus ejemplos para continuar con el registro del flujo.</p>
+
+        <div class="row" style="margin-top: 10px;">
+          <div class="input-group">
+            <label for="intent">Nombre de la intencion</label>
+            <input id="intent" type="text" value="informar_presupuesto" data-help-title="Nombre de la intencion" data-help-type="Campo con impacto directo" data-help-copy="Usa un nombre breve que resuma lo que el usuario quiere lograr." data-help-note="Debe representar una sola necesidad o accion del usuario.">
+          </div>
+          <div class="input-group">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" data-help-title="Tipo de intencion" data-help-type="Campo descriptivo" data-help-copy="Indica si la intencion inicia, cambia o cierra el recorrido." data-help-note="Este campo ayuda a entender el papel de la intencion dentro del flujo.">
+              <option>entrada</option>
+              <option selected>transicion</option>
+              <option>salida</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label for="estado-origen">Estado origen</label>
+            <select id="estado-origen" data-help-title="Estado origen" data-help-type="Campo descriptivo" data-help-copy="Selecciona desde que estado parte esta intencion." data-help-note="Debe coincidir con el punto donde se activa la frase del usuario.">
+              <option>consulta_inicial</option>
+              <option>explicar_tipo_docente</option>
+              <option>explicar_reporte_necesidades</option>
+              <option selected>explicar_validacion_presupuesto</option>
+              <option>explicar_revision_documental</option>
+              <option>cierre_informativo</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="estado-destino">Estado destino</label>
+            <select id="estado-destino" data-help-title="Estado destino" data-help-type="Campo descriptivo" data-help-copy="Selecciona a que estado debe llevar esta intencion." data-help-note="Esta transicion define el siguiente paso del recorrido.">
+              <option>explicar_reporte_necesidades</option>
+              <option selected>explicar_revision_documental</option>
+              <option>cierre_informativo</option>
+              <option>END</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 10px;">Ejemplos del usuario</h3>
+        <div class="row">
+          <div class="input-group"><label for="e1">Ejemplo 1</label><input id="e1" type="text" value="el presupuesto estimado es 20 millones" data-help-title="Ejemplo 1" data-help-type="Campo con impacto directo" data-help-copy="Escribe una frase real con la que un usuario pediria esta informacion." data-help-note="Varía el tono y la redaccion para cubrir formas naturales de preguntar."></div>
+        </div>
+        <div class="row">
+          <div class="input-group"><label for="e2">Ejemplo 2</label><input id="e2" type="text" value="tenemos 15000000 para este proceso" data-help-title="Ejemplo 2" data-help-type="Campo con impacto directo" data-help-copy="Escribe una segunda version de la misma intencion con otra redaccion." data-help-note="Los ejemplos deben ser distintos entre si pero equivalentes en significado."></div>
+          <div class="input-group"><label for="e3">Ejemplo 3</label><input id="e3" type="text" value="el valor presupuestal es de 8 millones" data-help-title="Ejemplo 3" data-help-type="Campo con impacto directo" data-help-copy="Escribe una forma adicional de decir lo mismo usando lenguaje natural." data-help-note="Cubre diferentes expresiones para evitar ambiguedades."></div>
+        </div>
+        <div class="row">
+          <div class="input-group"><label for="e4">Ejemplo 4</label><input id="e4" type="text" value="presupuesto aprobado por 12000000" data-help-title="Ejemplo 4" data-help-type="Campo con impacto directo" data-help-copy="Incluye una variante con verbo o estructura distinta." data-help-note="Sirve para entrenar el reconocimiento de la misma necesidad con otras palabras."></div>
+          <div class="input-group"><label for="e5">Ejemplo 5</label><input id="e5" type="text" value="el monto disponible es 10000000" data-help-title="Ejemplo 5" data-help-type="Campo con impacto directo" data-help-copy="Agrega un quinto ejemplo que suene a consulta real." data-help-note="Mantener variedad mejora la cobertura del registro."></div>
+        </div>
+
+        <div class="row" style="margin-top: 8px;">
+          <button class="btn btn-soft" data-demo-action="Nueva intencion">Nuevo registro</button>
+          <button class="btn btn-primary" data-demo-action="Guardar informacion de intencion">Guardar registro</button>
+        </div>
+      </article>
+
+      <article class="card context-rail" data-context-rail data-default-title="Ayuda contextual" data-default-copy="Enfoca un campo para ver una sugerencia breve y precisa." data-default-note="La ayuda cambia mientras el usuario navega entre los campos.">
+        <p class="context-eyebrow">Ayuda contextual</p>
+        <h2 class="context-title" data-context-title>Nombre de la intencion</h2>
+        <div class="context-note" style="margin-bottom: 10px; background: #eef5ff; color: #24486b;" data-context-type>Campo con impacto directo</div>
+        <p class="context-copy" data-context-copy>Usa un nombre breve que resuma lo que el usuario quiere lograr.</p>
+        <div class="context-note" data-context-note>Debe representar una sola necesidad o accion del usuario.</div>
+
+        <ul class="timeline context-summary" style="margin-top: 14px;">
+          <li>
+            <span class="timeline-marker">1</span>
+            <div>Incluye ejemplos reales y variados.</div>
+          </li>
+          <li>
+            <span class="timeline-marker">2</span>
+            <div>Evita repetir frases casi identicas.</div>
+          </li>
+          <li>
+            <span class="timeline-marker">3</span>
+            <div>Usa lenguaje que una persona si diria en la practica.</div>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card fade-up delay-2" style="margin-top: 16px;">
+      <h2 class="section-title">Intenciones registradas (3)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Intent</th>
+              <th>Tipo</th>
+              <th>Estado origen</th>
+              <th>Estado destino</th>
+              <th>Ejemplos</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>solicitar_vinculacion_especial</td>
+              <td>entrada</td>
+              <td>consulta_inicial</td>
+              <td>explicar_tipo_docente</td>
+              <td>5</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar solicitar_vinculacion_especial">Editar</button></td>
+            </tr>
+            <tr>
+              <td>informar_necesidades_docentes</td>
+              <td>transicion</td>
+              <td>explicar_reporte_necesidades</td>
+              <td>explicar_validacion_presupuesto</td>
+              <td>5</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar informar_necesidades_docentes">Editar</button></td>
+            </tr>
+            <tr>
+              <td>confirmar_cierre_flujo</td>
+              <td>salida</td>
+              <td>cierre_informativo</td>
+              <td>END</td>
+              <td>5</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar confirmar_cierre_flujo">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card fade-up delay-3" style="margin-top: 16px;">
+      <div class="row" style="justify-content: space-between;">
+        <a class="btn btn-soft" href="estados.html">Anterior: Estados</a>
+        <button class="btn btn-primary" data-demo-action="Siguiente modulo 04 entidades y slots">Siguiente: Entidades y slots</button>
+      </div>
+    </section>
+
+    <footer class="helper" style="margin-top: 16px; text-align: center;">
+      Aplicacion local sin servidor. <span data-year></span>
+    </footer>
+  </main>
+
+  <script src="../js/mockups.js"></script>
+</body>
+</html>

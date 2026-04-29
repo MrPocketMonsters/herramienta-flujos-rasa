@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Estados</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar fade-up">
+      <div class="branding">
+        <span class="branding-badge" aria-hidden="true">E</span>
+        <div>
+          <h1>Registro de Estados</h1>
+          <p class="subtext">Formulario guiado para registrar la informacion de cada estado del proceso.</p>
+        </div>
+      </div>
+      <a class="btn btn-soft" href="../index.html">Volver al selector</a>
+    </header>
+
+    <section class="grid cols-2 fade-up delay-1">
+      <article class="card" data-context-source>
+        <h2>2) Registro de estado</h2>
+        <p class="helper">Completa la informacion del estado para continuar con el registro del flujo.</p>
+
+        <div class="row" style="margin-top: 10px;">
+          <div class="input-group">
+            <label for="estado-id">ID del estado</label>
+            <input id="estado-id" type="text" value="explicar_validacion_presupuesto" data-help-title="ID del estado" data-help-type="Campo con impacto directo" data-help-copy="Usa un identificador corto y unico que describa el paso del flujo." data-help-note="Evita espacios y nombres ambiguos para facilitar la lectura del proceso.">
+          </div>
+          <div class="input-group">
+            <label for="orden">Orden</label>
+            <input id="orden" type="number" value="4" data-help-title="Orden" data-help-type="Campo con impacto directo" data-help-copy="Indica la posicion secuencial del estado dentro del recorrido." data-help-note="Este valor ayuda a visualizar el avance del flujo.">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label for="desc">Descripcion funcional</label>
+            <textarea id="desc" data-help-title="Descripcion funcional" data-help-type="Campo descriptivo">Describe validacion presupuestal y responsable funcional.</textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label for="entrada">Condicion de entrada</label>
+            <input id="entrada" type="text" value="Presupuesto reportado" data-help-title="Condicion de entrada" data-help-type="Campo con impacto directo" data-help-copy="Escribe que debe cumplirse para entrar a este estado." data-help-note="Puede ser una condicion del usuario, del sistema o de los datos disponibles.">
+          </div>
+          <div class="input-group">
+            <label for="salida">Condicion de salida</label>
+            <input id="salida" type="text" value="Usuario solicita cierre o siguiente paso" data-help-title="Condicion de salida" data-help-type="Campo con impacto directo" data-help-copy="Escribe que debe ocurrir para avanzar al siguiente estado." data-help-note="La salida debe dejar claro cuando termina este paso.">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label for="siguiente">Siguiente estado</label>
+            <select id="siguiente" data-help-title="Siguiente estado" data-help-type="Campo con impacto directo" data-help-copy="Selecciona el estado al que debe continuar el flujo." data-help-note="Debe corresponder con el recorrido previsto del proceso.">
+              <option>explicar_revision_documental</option>
+              <option>cierre_informativo</option>
+              <option>END</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="respuesta">Respuesta principal</label>
+            <select id="respuesta" data-help-title="Respuesta principal" data-help-type="Campo descriptivo" data-help-copy="Selecciona la respuesta asociada a este estado." data-help-note="La respuesta debe explicar lo que el usuario necesita entender.">
+              <option>utter_validacion_presupuesto</option>
+              <option>utter_revision_documental</option>
+              <option>utter_cierre_vinculacion</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label for="repregunta">Requiere repregunta</label>
+            <select id="repregunta" data-help-title="Requiere repregunta" data-help-type="Campo descriptivo" data-help-copy="Indica si hace falta pedir un dato adicional al usuario." data-help-note="Usa esta opcion cuando la informacion obligatoria no este completa.">
+              <option>Si</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="texto-repregunta">Texto de repregunta</label>
+            <input id="texto-repregunta" type="text" value="Cual es el valor presupuestal estimado para este proceso?" data-help-title="Texto de repregunta" data-help-type="Campo descriptivo" data-help-copy="Escribe la pregunta de apoyo que se mostrara cuando falte informacion." data-help-note="Debe ser clara, breve y facil de responder.">
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 8px;">
+          <button class="btn btn-soft" data-demo-action="Nuevo estado">Nuevo registro</button>
+          <button class="btn btn-primary" data-demo-action="Guardar informacion de estado">Guardar registro</button>
+        </div>
+      </article>
+
+      <article class="card context-rail" data-context-rail data-default-title="Ayuda contextual" data-default-copy="Enfoca un campo para ver una sugerencia breve y precisa." data-default-note="La ayuda cambia mientras el usuario navega entre los campos.">
+        <p class="context-eyebrow">Ayuda contextual</p>
+        <h2 class="context-title" data-context-title>ID del estado</h2>
+        <div class="context-note" style="margin-bottom: 10px; background: #eef5ff; color: #24486b;" data-context-type>Campo con impacto directo</div>
+        <p class="context-copy" data-context-copy>Usa un identificador corto y unico que describa el paso del flujo.</p>
+        <div class="context-note" data-context-note>Evita espacios y nombres ambiguos para facilitar la lectura del proceso.</div>
+
+        <ul class="timeline context-summary" style="margin-top: 14px;">
+          <li>
+            <span class="timeline-marker">1</span>
+            <div>Describe el estado con lenguaje simple.</div>
+          </li>
+          <li>
+            <span class="timeline-marker">2</span>
+            <div>Indica con claridad cuando entra y cuando sale.</div>
+          </li>
+          <li>
+            <span class="timeline-marker">3</span>
+            <div>Define repreguntas solo cuando falte informacion.</div>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card fade-up delay-2" style="margin-top: 16px;">
+      <h2 class="section-title">Estados registrados (3)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Orden</th>
+              <th>Estado ID</th>
+              <th>Entrada</th>
+              <th>Salida</th>
+              <th>Siguiente</th>
+              <th>Repregunta</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>consulta_inicial</td>
+              <td>Intent de entrada identificado</td>
+              <td>Usuario confirma continuidad</td>
+              <td>explicar_tipo_docente</td>
+              <td>No</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar consulta_inicial">Editar</button></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>explicar_tipo_docente</td>
+              <td>Entidad tipo_docente disponible</td>
+              <td>Usuario pide siguiente paso</td>
+              <td>explicar_reporte_necesidades</td>
+              <td>Si</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar explicar_tipo_docente">Editar</button></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>explicar_reporte_necesidades</td>
+              <td>Nivel y numero_docentes disponibles</td>
+              <td>Usuario confirma que tiene datos</td>
+              <td>explicar_validacion_presupuesto</td>
+              <td>Si</td>
+              <td><button class="btn btn-soft" data-demo-action="Editar explicar_reporte_necesidades">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card fade-up delay-3" style="margin-top: 16px;">
+      <div class="row" style="justify-content: space-between;">
+        <a class="btn btn-soft" href="../index.html">Anterior: Resumen</a>
+        <a class="btn btn-primary" href="intentenciones.html">Siguiente: Intenciones</a>
+      </div>
+    </section>
+
+    <footer class="helper" style="margin-top: 16px; text-align: center;">
+      Aplicacion local sin servidor. <span data-year></span>
+    </footer>
+  </main>
+
+  <script src="../js/mockups.js"></script>
+</body>
+</html>
