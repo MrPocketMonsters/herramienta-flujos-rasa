@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Herramienta de Flujos Rasa",
+  "version": "0.1.0",
+  "identifier": "com.mrpocketmonsters.herramientaflujosrasa",
+  "build": {
+    "beforeDevCommand": "python tools/preparar_tauri.py --source . --target web",
+    "beforeBuildCommand": "python tools/preparar_tauri.py --source . --target web",
+    "frontendDist": "../web"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "security": {
+      "csp": null,
+      "capabilities": [
+        {
+          "identifier": "main-window-data-access",
+          "description": "Permite a la ventana principal ejecutar los comandos internos de la app.",
+          "windows": ["main"],
+          "permissions": ["core:default"]
+        }
+      ]
+    },
+    "windows": [
+      {
+        "title": "Gestor de Flujos Conversacionales",
+        "width": 1280,
+        "height": 900,
+        "resizable": true,
+        "center": true
+      }
+    ]
+  },
+  "bundle": {
+    "active": false
+  }
+}
