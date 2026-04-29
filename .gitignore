@@ -1,3 +1,13 @@
+# Virtual environments
 /.venv/
+
+# Build artifacts (build/ es para Rasa outputs futuros, generado localmente)
 /build/
+
+# Tauri build (target y gen son generados por Cargo)
+/src-tauri/target/
+/src-tauri/gen/
+
+# Data external (CSV files editados por usuario, NO versionados)
+# El usuario mantiene data/ en su máquina, sincronizado externamente
 /data/

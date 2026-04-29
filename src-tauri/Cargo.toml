@@ -1,0 +1,13 @@
+[package]
+name = "herramienta-flujos-rasa"
+version = "0.1.0"
+description = "Aplicacion de escritorio portable para gestionar flujos conversacionales"
+authors = ["MrPocketMonsters"]
+edition = "2021"
+build = "build.rs"
+
+[build-dependencies]
+tauri-build = "2"
+
+[dependencies]
+tauri = "2"
