@@ -11,3 +11,6 @@
 # Data external (CSV files editados por usuario, NO versionados)
 # El usuario mantiene data/ en su máquina, sincronizado externamente
 /data/
+
+# Binarios generados (herramienta-flujos-rasa o herramienta-flujos-rasa.exe)
+/herramienta-flujos-rasa*
