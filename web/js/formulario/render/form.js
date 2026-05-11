@@ -73,9 +73,6 @@ export function renderForm(config, dataRows) {
 
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
-  var index = 0;
-  var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
-  var sampleRow = dataRows[safeIndex] || {};
   var allFields = [];
 
   rows.forEach(function (row) {
@@ -94,7 +91,7 @@ export function renderForm(config, dataRows) {
     }
 
     row.fields.forEach(function (field) {
-      rowNode.appendChild(createInputControl(field, sampleRow, optionsMap));
+      rowNode.appendChild(createInputControl(field, null, optionsMap));
     });
 
     formRowsContainer.appendChild(rowNode);
@@ -106,4 +103,30 @@ export function renderForm(config, dataRows) {
   var actions = formConfig.actions || {};
   setText("[data-form-new]", actions.newLabel || "Nuevo registro");
   setText("[data-form-save]", actions.saveLabel || "Guardar registro");
+}
+
+export function loadFormByIndex(config, dataRows, index) {
+  var formConfig = config.formConfig || {};
+  var rows = normalizeRows(formConfig.rows || []);
+  var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
+  var sampleRow = dataRows[safeIndex] || {};
+  var allFields = [];
+
+  rows.forEach(function (row) {
+    (row.fields || []).forEach(function (field) {
+      allFields.push(field);
+    });
+  });
+
+  allFields.forEach(function (field) {
+    var dataColumn = field.dataColumn || "";
+    var label = field.label || dataColumn || "Campo";
+    var fieldId = field.id || slugify(dataColumn || label);
+    var control = bySelector("#" + fieldId);
+
+    if (control && dataColumn) {
+      var value = sampleRow[dataColumn] || "";
+      control.value = value;
+    }
+  });
 }

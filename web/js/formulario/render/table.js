@@ -1,7 +1,7 @@
 import { applyCountTemplate } from '../../utils/strings.js';
 import { bySelector } from '../dom.js';
 
-export function renderTable(config, dataRows) {
+export function renderTable(config, dataRows, onLoadRow) {
   var headerRow = bySelector("[data-table-header-row]");
   var body = bySelector("[data-table-body]");
   if (!headerRow || !body) {
@@ -18,8 +18,12 @@ export function renderTable(config, dataRows) {
     headerRow.appendChild(th);
   });
 
+  var th = document.createElement("th");
+  th.textContent = "Acción";
+  headerRow.appendChild(th);
+
   body.innerHTML = "";
-  dataRows.forEach(function (row) {
+  dataRows.forEach(function (row, rowIndex) {
     var tr = document.createElement("tr");
     columns.forEach(function (column) {
       var td = document.createElement("td");
@@ -27,6 +31,20 @@ export function renderTable(config, dataRows) {
       td.textContent = value;
       tr.appendChild(td);
     });
+
+    var actionTd = document.createElement("td");
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-soft";
+    button.textContent = "Cargar";
+    button.addEventListener("click", function () {
+      if (typeof onLoadRow === "function") {
+        onLoadRow(rowIndex);
+      }
+    });
+    actionTd.appendChild(button);
+    tr.appendChild(actionTd);
+
     body.appendChild(tr);
   });
 
