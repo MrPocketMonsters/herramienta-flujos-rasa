@@ -152,27 +152,62 @@
     "columns": [
       {
         "label": "Orden",
-        "dataColumn": "orden"
+        "dataColumn": "orden",
+        "width": {
+          "type": "max",
+          "value": 80
+        },
+        "style": {
+          "textAlign": "center"
+        }
       },
       {
         "label": "Estado ID",
-        "dataColumn": "estado_id"
+        "dataColumn": "estado_id",
+        "width": {
+          "type": "min",
+          "value": 100
+        },
+        "style": {
+          "fontWeight": "bold"
+        }
       },
       {
         "label": "Entrada",
-        "dataColumn": "condicion_entrada"
+        "dataColumn": "condicion_entrada",
+        "width": {
+          "type": "min",
+          "value": 150
+        },
+        "wordWrap": true
       },
       {
         "label": "Salida",
-        "dataColumn": "condicion_salida"
+        "dataColumn": "condicion_salida",
+        "width": {
+          "type": "min",
+          "value": 150
+        },
+        "wordWrap": true
       },
       {
         "label": "Siguiente",
-        "dataColumn": "siguiente_estado"
+        "dataColumn": "siguiente_estado",
+        "width": {
+          "type": "min",
+          "value": 100
+        }
       },
       {
         "label": "Repregunta",
-        "dataColumn": "requiere_repregunta"
+        "dataColumn": "requiere_repregunta",
+        "width": {
+          "type": "min",
+          "value": 90
+        },
+        "style": {
+          "textAlign": "center"
+        }
       }
     ]
   },
