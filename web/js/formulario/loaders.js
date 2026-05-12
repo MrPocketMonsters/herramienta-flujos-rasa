@@ -6,6 +6,14 @@ export function getConfigPath() {
   return "../config/" + params.get("config");
 }
 
+export function getFlowId() {
+  var params = new URLSearchParams(window.location.search);
+  if (!params.has("flujo")) {
+    return "";
+  }
+  return params.get("flujo");
+}
+
 export async function loadText(url) {
   var response = await fetch(url);
   if (!response.ok) {

@@ -14,21 +14,56 @@
       "02_estados.formulario.json",
     ];
 
-    configFiles.forEach(file => {
-      const option = document.createElement('option');
+    select.innerHTML = '';
+
+    configFiles.forEach(function (file) {
+      var option = document.createElement('option');
       option.value = file;
       option.textContent = file;
       select.appendChild(option);
     });
+
+    if (!select.value && configFiles.length > 0) {
+      select.value = configFiles[0];
+    }
+  }
+
+  function setSelectTestFlujoOptions() {
+    var select = document.querySelector('#select-test-flujo');
+    if (!select) return;
+
+    var flowIds = [
+      "",
+      "vinculacion_especial_docentes",
+    ];
+
+    select.innerHTML = '';
+
+    flowIds.forEach(function (flowId) {
+      var option = document.createElement('option');
+      option.value = flowId;
+      option.textContent = flowId || "Todos los flujos";
+      select.appendChild(option);
+    });
+
+    if (!select.value) {
+      select.value = "";
+    }
   }
 
   setYear();
   setSelectTestFormularioOptions();
+  setSelectTestFlujoOptions();
 })();
 
 function goToFormulario() {
   var value = document.querySelector('#select-test-formulario').value;
+  var flujo = document.querySelector('#select-test-flujo').value;
   if (value) {
-    window.location.href = `html/formulario.html?config=${encodeURIComponent(value)}`;
+    var href = `html/formulario.html?config=${encodeURIComponent(value)}`;
+    if (flujo) {
+      href += `&flujo=${encodeURIComponent(flujo)}`;
+    }
+    window.location.href = href;
   }
 }

@@ -20,19 +20,50 @@ function uniquePush(target, value) {
   }
 }
 
+export function filterRowsByFlow(rows, flowId, options) {
+  var safeFlowId = String(flowId || "").trim();
+  var strict = !options || options.strict !== false;
+  if (!safeFlowId) {
+    return (Array.isArray(rows) ? rows : []).map(function (row, index) {
+      return {
+        row: row,
+        globalIndex: index
+      };
+    });
+  }
+
+  var filteredRows = [];
+  (Array.isArray(rows) ? rows : []).forEach(function (row, index) {
+    if (String(row && row.flujo_id ? row.flujo_id : "").trim() === safeFlowId) {
+      filteredRows.push({
+        row: row,
+        globalIndex: index
+      });
+    }
+  });
+
+  if (!filteredRows.length && strict) {
+    throw new Error("No se encontraron registros para el flujo '" + safeFlowId + "'.");
+  }
+
+  return filteredRows;
+}
+
 function getOptionDefinition(field) {
   var definition = field.options || {};
   return definition && typeof definition === "object" && !Array.isArray(definition) ? definition : null;
 }
 
-async function loadDynamicRows(dataPath, configBaseUrl, mainDataPath, mainDataRows, csvCache) {
+async function loadDynamicRows(dataPath, configBaseUrl, mainDataPath, mainDataRows, csvCache, flowId) {
   var normalizedDataPath = String(dataPath || "").trim();
   if (!normalizedDataPath) {
     throw new Error("Una definición dinámica de opciones no incluye dataPath.");
   }
 
   if (String(normalizedDataPath) === String(mainDataPath || "")) {
-    return mainDataRows;
+    return filterRowsByFlow(mainDataRows, flowId, { strict: false }).map(function (item) {
+      return item.row;
+    });
   }
 
   if (csvCache[normalizedDataPath]) {
@@ -40,12 +71,14 @@ async function loadDynamicRows(dataPath, configBaseUrl, mainDataPath, mainDataRo
   }
 
   var csvText = await loadDataText(normalizedDataPath, configBaseUrl);
-  var rows = toObjects(parseCsv(csvText));
+  var rows = filterRowsByFlow(toObjects(parseCsv(csvText)), flowId, { strict: false }).map(function (item) {
+    return item.row;
+  });
   csvCache[normalizedDataPath] = rows;
   return rows;
 }
 
-export async function resolveFieldOptions(config, mainDataRows, configBaseUrl) {
+export async function resolveFieldOptions(config, mainDataRows, configBaseUrl, flowId) {
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
   var csvCache = {};
@@ -77,7 +110,7 @@ export async function resolveFieldOptions(config, mainDataRows, configBaseUrl) {
 
       for (var k = 0; k < dynamicValues.length; k += 1) {
         var source = dynamicValues[k] || {};
-        var sourceRows = await loadDynamicRows(source.dataPath, configBaseUrl, config.dataPath, mainDataRows, csvCache);
+        var sourceRows = await loadDynamicRows(source.dataPath, configBaseUrl, config.dataPath, mainDataRows, csvCache, flowId);
         var valueColumn = source.valueColumn || "";
 
         if (!valueColumn) {

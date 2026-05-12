@@ -1,7 +1,7 @@
 import { parseCsv, toObjects } from '../utils/csv.js';
-import { getConfigPath, loadText, loadDataText } from './loaders.js';
+import { getConfigPath, getFlowId, loadText, loadDataText } from './loaders.js';
 import { renderForm, renderTable, renderNavigation, setPageInfo, wireContextPanel, setYear, showError, loadFormByIndex } from './render/render.js';
-import { resolveFieldOptions } from './options.js';
+import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
 // Plantilla dinamica para renderizar formularios configurables desde JSON + CSV.
 (function () {
@@ -10,6 +10,7 @@ import { resolveFieldOptions } from './options.js';
       setYear();
 
       var configPath = getConfigPath();
+      var flowId = getFlowId();
       var configUrl = new URL(configPath, window.location.href);
       var configText = await loadText(configUrl.href);
       if (!(configText?.startsWith("{"))) {
@@ -24,16 +25,21 @@ import { resolveFieldOptions } from './options.js';
 
       var csvText = await loadDataText(dataPath, configUrl.href);
       var dataRows = toObjects(parseCsv(csvText));
-      var fieldOptions = await resolveFieldOptions(config, dataRows, configUrl.href);
+      var flowEntries = filterRowsByFlow(dataRows, flowId, { strict: false });
+      var visibleRows = flowEntries.map(function (entry) {
+        return entry.row;
+      });
+      var fieldOptions = await resolveFieldOptions(config, dataRows, configUrl.href, flowId);
 
       setPageInfo(config);
       renderForm(config, fieldOptions);
 
       function loadRow(index) {
-        loadFormByIndex(config, dataRows, index);
+        var selectedEntry = flowEntries[index] || { globalIndex: index };
+        loadFormByIndex(config, dataRows, selectedEntry.globalIndex);
       }
 
-      renderTable(config, dataRows, loadRow);
+      renderTable(config, visibleRows, loadRow);
       renderNavigation(config);
       wireContextPanel();
     } catch (error) {
