@@ -82,6 +82,15 @@
             "label": "Siguiente estado",
             "dataColumn": "siguiente_estado",
             "type": "select",
+            "options": {
+              "staticValues": ["END"],
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ]
+            },
             "help": {
               "title": "Siguiente estado",
               "type": "Campo con impacto directo",
@@ -93,6 +102,15 @@
             "label": "Respuesta principal",
             "dataColumn": "respuesta_id_principal",
             "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "05_respuestas.csv",
+                  "valueColumn": "respuesta_id"
+                }
+              ],
+              "allowCustom": true
+            },
             "help": {
               "title": "Respuesta principal",
               "type": "Campo descriptivo",
@@ -108,7 +126,9 @@
             "label": "Requiere repregunta",
             "dataColumn": "requiere_repregunta",
             "type": "select",
-            "options": ["Si", "No"],
+            "options": {
+              "staticValues": ["Si", "No"]
+            },
             "help": {
               "title": "Requiere repregunta",
               "type": "Campo descriptivo",

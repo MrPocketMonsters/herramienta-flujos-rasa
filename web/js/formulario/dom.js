@@ -40,27 +40,3 @@ export function normalizeRows(formRows) {
     return { fields: [row] };
   });
 }
-
-export function getColumnOptions(rows, columns) {
-  var maps = {};
-  columns.forEach(function (column) {
-    if (!column || !column.dataColumn) {
-      return;
-    }
-    maps[column.dataColumn] = [];
-  });
-
-  rows.forEach(function (row) {
-    Object.keys(maps).forEach(function (column) {
-      var value = row[column];
-      if (!value) {
-        return;
-      }
-      if (maps[column].indexOf(value) === -1) {
-        maps[column].push(value);
-      }
-    });
-  });
-
-  return maps;
-}

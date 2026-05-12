@@ -1,6 +1,7 @@
 import { parseCsv, toObjects } from '../utils/csv.js';
 import { getConfigPath, loadText, loadDataText } from './loaders.js';
 import { renderForm, renderTable, renderNavigation, setPageInfo, wireContextPanel, setYear, showError, loadFormByIndex } from './render/render.js';
+import { resolveFieldOptions } from './options.js';
 
 // Plantilla dinamica para renderizar formularios configurables desde JSON + CSV.
 (function () {
@@ -23,9 +24,10 @@ import { renderForm, renderTable, renderNavigation, setPageInfo, wireContextPane
 
       var csvText = await loadDataText(dataPath, configUrl.href);
       var dataRows = toObjects(parseCsv(csvText));
+      var fieldOptions = await resolveFieldOptions(config, dataRows, configUrl.href);
 
       setPageInfo(config);
-      renderForm(config, dataRows);
+      renderForm(config, fieldOptions);
 
       function loadRow(index) {
         loadFormByIndex(config, dataRows, index);
