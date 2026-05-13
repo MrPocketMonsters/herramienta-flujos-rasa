@@ -27,6 +27,9 @@
             "label": "Orden",
             "dataColumn": "orden",
             "type": "number",
+            "limits": {
+              "min": 1
+            },
             "help": {
               "title": "Orden",
               "type": "Campo con impacto directo",

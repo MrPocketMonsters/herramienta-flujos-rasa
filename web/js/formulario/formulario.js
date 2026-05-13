@@ -80,16 +80,8 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     if (flowId)
       formData.flujo_id = flowId;
 
-    Object.keys(formData).forEach(function (key) {
-      if (!checkUnique(key, index, formData[key])) {
-        const error = new Error(
-          `El valor '${formData[key]}' para el campo '${key}' no es único. Por favor, ingresa un valor diferente.`
-        );
-        showError(error.message);
-        console.error(error);
-        return;
-      }
-    });
+    if (!validate(formData, index))
+      return;
 
     if (index === Number.POSITIVE_INFINITY) {
       dataRows.push(formData);
@@ -104,6 +96,55 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     await reloadState(currentGlobalIndex);
   }
 
+  function validate(formData, index) {
+    for (var key in formData)
+      if (!validateColumn(key, index, formData[key]))
+        return false;
+
+    return true;
+  }
+
+  function validateColumn(dataColumn, index, newValue) {
+    try {
+      checkUnique(dataColumn, index, newValue);
+      checkLimits(dataColumn, newValue);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  function checkLimits(dataColumn, newValue) {
+    var field = config.formConfig.rows.reduce((acc, row) =>
+          acc.concat(row.fields || [])
+        , [])
+        .find((f) => (f.dataColumn === dataColumn) && f.limits)
+
+    if (!field)
+      return;
+
+    var limits = field.limits || {};
+
+    var min = parseFloat(limits.min) || Number.NEGATIVE_INFINITY;
+    if (min !== null && isNaN(min))
+      throw new Error(`El valor '${min}' para el límite mínimo del campo '${dataColumn}' no es un número válido.`);
+
+    var max = parseFloat(limits.max) || Number.POSITIVE_INFINITY;
+    if (max !== null && isNaN(max))
+      throw new Error(`El valor '${max}' para el límite máximo del campo '${dataColumn}' no es un número válido.`);
+
+    var numericValue = parseFloat(newValue);
+    if (isNaN(numericValue))
+      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' no es un número válido.`);
+
+    if (min !== null && numericValue < min)
+      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' es menor al mínimo permitido (${min}).`);
+
+    if (max !== null && numericValue > max)
+      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' es mayor al máximo permitido (${max}).`);
+  }
+
   function checkUnique(dataColumn, index, newValue) {
     var field = config.formConfig.rows.reduce((acc, row) =>
           acc.concat(row.fields || [])
@@ -111,15 +152,20 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
         .find((f) => (f.dataColumn === dataColumn) && f.unique)
 
     if (!field)
-      return true;
+      return;
 
     var rows = flowId ? dataRows.filter((row) => row.flujo_id === flowId) : dataRows;
-    return !rows
+    const isValueDuplicate = rows
         .filter((row) => row[dataColumn])
         .map((row) => String(row[dataColumn]))
         .some((value, idx) =>
           value === String(newValue) && idx !== index
         );
+
+    if (isValueDuplicate)
+      throw new Error(
+        `El valor '${newValue}' para el campo '${dataColumn}' no es único. Por favor, ingresa un valor diferente.`
+      );
   }
 
   bootstrap();
