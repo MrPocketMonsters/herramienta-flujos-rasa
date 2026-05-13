@@ -24,10 +24,13 @@ El objetivo de la aplicación web es reducir la fricción asociada a la plantill
 .
 ├── index.html                 # Landing page
 ├── formulario.html            # Interfaz de formulario/tabla
-├── web/                       # [GENERADO POR PREPARAR_TAURI.PY, EN REPO]
-│   ├── css/                   # Estilos
-│   ├── html/                  # Partiales HTML
-│   └── js/                    # Scripts frontend (formulario.js, etc.)
+├── web/                       # Código estático de la interfaz web (empaquetado en la app)
+│   ├── css/                   # Estilos (incluye `app.css`, ajustes recientes para el formulario)
+│   ├── html/                  # Partiales HTML (p. ej. `estados.html`, `intentenciones.html`, `formulario.html`)
+│   ├── js/                    # Scripts frontend
+│   │   ├── formulario/        # Módulos del formulario dinámico (DOM, render, loaders, savers, options, components)
+│   │   └── utils/             # Utilidades (csv, strings, etc.)
+│   └── config/                # Configuraciones de formularios (p. ej. `02_estados.formulario.json`)
 ├── data/                      # [NO EN REPO, EXTERNO]
 │   ├── flujo_conversacional.xlsx
 │   ├── 00_introduccion_libro.csv
@@ -102,8 +105,8 @@ El detalle de cada CSV y su hoja correspondiente está documentado en [data/READ
 
 - Python 3.12
 - `openpyxl` para leer el workbook Excel
-- `pandas` para validaciones y comparaciones entre CSV y Excel
 - Tauri para empaquetar la interfaz como app portable de escritorio
+- Javascript para el frontend, con enfoque modular y componentes reutilizables.
 
 Las dependencias están en [requirements.txt](requirements.txt).
 
@@ -225,3 +228,5 @@ El resultado del proceso de compilación puede incluir:
 
 - La hoja `00_introduccion_libro` funciona como contexto general del workbook.
 - La primera fila descriptiva de cada hoja no forma parte del CSV exportado.
+
+Para probar el formulario localmente, abrir `web/index.html` o `web/index-mock.html` en el navegador y navegar a la sección de formulario. Para incluir los cambios en la app compilada, reconstruir los assets web y seguir el flujo de empaquetado descrito en [docs/TAURI_BUILD.md](docs/TAURI_BUILD.md).

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Modulo</title>
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar fade-up">
+      <div class="branding">
+        <span class="branding-badge" aria-hidden="true" data-page-badge>F</span>
+        <div>
+          <h1 data-page-title>Formulario de modulo</h1>
+          <p class="subtext" data-page-subtitle>Plantilla reutilizable para formularios de flujo.</p>
+        </div>
+      </div>
+      <a class="btn btn-soft" href="../index.html">Volver al selector</a>
+    </header>
+
+    <section class="grid cols-2 fade-up delay-1">
+      <article class="card" data-context-source>
+        <h2 data-form-title>Formulario</h2>
+        <p class="helper" data-form-helper>Completa la informacion del modulo.</p>
+
+        <div id="form-rows"></div>
+
+        <div class="row" style="margin-top: 8px;">
+          <button class="btn btn-soft" type="button" data-form-new>Nuevo registro</button>
+          <button class="btn btn-primary" type="button" data-form-save>Guardar registro</button>
+        </div>
+      </article>
+
+      <article class="card context-rail" data-context-rail data-default-title="Ayuda contextual" data-default-copy="Enfoca un campo para ver una sugerencia breve y precisa." data-default-note="La ayuda cambia mientras el usuario navega entre los campos." data-default-type="Campo descriptivo">
+        <p class="context-eyebrow" data-context-eyebrow>Ayuda contextual</p>
+        <h2 class="context-title" data-context-title>Ayuda contextual</h2>
+        <div class="context-note" style="margin-bottom: 10px; background: #eef5ff; color: #24486b;" data-context-type>Campo descriptivo</div>
+        <p class="context-copy" data-context-copy>Enfoca un campo para ver una sugerencia breve y precisa.</p>
+        <div class="context-note" data-context-note>La ayuda cambia mientras el usuario navega entre los campos.</div>
+
+        <ul class="timeline context-summary" style="margin-top: 14px;" data-context-summary></ul>
+      </article>
+    </section>
+
+    <section class="card fade-up delay-2" style="margin-top: 16px;">
+      <h2 class="section-title" data-table-title>Registros</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr data-table-header-row></tr>
+          </thead>
+          <tbody data-table-body></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card fade-up delay-3" style="margin-top: 16px;">
+      <div class="row" style="justify-content: space-between;">
+        <button class="btn btn-soft" type="button" data-nav-prev onclick="navigateTo(this.getAttribute('data-href'))">Anterior</button>
+        <button class="btn btn-primary" type="button" data-nav-next onclick="navigateTo(this.getAttribute('data-href'))">Siguiente</button>
+      </div>
+    </section>
+
+    <footer class="helper" style="margin-top: 16px; text-align: center;">
+			<p>Universidad Distrital Francisco José de Caldas</p>
+			<p>Facultad de Ingeniería</p>
+			<p>Nicolás Sabogal <span data-year></span></p>
+    </footer>
+  </main>
+
+  <script type="module" src="../js/formulario/formulario.js"></script>
+</body>
+</html>

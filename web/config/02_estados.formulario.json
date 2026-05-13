@@ -1,0 +1,251 @@
+{
+  "page": {
+    "badge": "E",
+    "title": "Registro de Estados",
+    "subtitle": "Formulario guiado para registrar la informacion de cada estado del proceso."
+  },
+  "dataPath": "02_estados.csv",
+  "formConfig": {
+    "title": "2) Registro de estado",
+    "helper": "Estado que se puede alcanzar durante el flujo.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "ID del estado",
+            "dataColumn": "estado_id",
+            "type": "text",
+            "unique": true,
+            "help": {
+              "title": "ID del estado",
+              "type": "Campo con impacto directo",
+              "copy": "Usa un identificador corto y unico que describa el paso del flujo.",
+              "note": "Evita espacios y nombres ambiguos para facilitar la lectura del proceso."
+            }
+          },
+          {
+            "label": "Orden",
+            "dataColumn": "orden",
+            "type": "number",
+            "limits": {
+              "min": 1
+            },
+            "help": {
+              "title": "Orden",
+              "type": "Campo con impacto directo",
+              "copy": "Indica la posicion secuencial del estado dentro del recorrido.",
+              "note": "Este valor ayuda a visualizar el avance del flujo."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Descripcion funcional",
+            "dataColumn": "descripcion",
+            "type": "textarea",
+            "help": {
+              "title": "Descripcion funcional",
+              "type": "Campo descriptivo",
+              "copy": "Resume que ocurre en este estado de forma clara.",
+              "note": "Describe una sola idea funcional por estado."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Condicion de entrada",
+            "dataColumn": "condicion_entrada",
+            "type": "text",
+            "help": {
+              "title": "Condicion de entrada",
+              "type": "Campo con impacto directo",
+              "copy": "Escribe que debe cumplirse para entrar a este estado.",
+              "note": "Puede ser una condicion del usuario, del sistema o de los datos disponibles."
+            }
+          },
+          {
+            "label": "Condicion de salida",
+            "dataColumn": "condicion_salida",
+            "type": "text",
+            "help": {
+              "title": "Condicion de salida",
+              "type": "Campo con impacto directo",
+              "copy": "Escribe que debe ocurrir para avanzar al siguiente estado.",
+              "note": "La salida debe dejar claro cuando termina este paso."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Siguiente estado",
+            "dataColumn": "siguiente_estado",
+            "type": "select",
+            "options": {
+              "staticValues": ["END"],
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ]
+            },
+            "help": {
+              "title": "Siguiente estado",
+              "type": "Campo con impacto directo",
+              "copy": "Selecciona el estado al que debe continuar el flujo.",
+              "note": "Debe corresponder con el recorrido previsto del proceso."
+            }
+          },
+          {
+            "label": "Respuesta principal",
+            "dataColumn": "respuesta_id_principal",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "05_respuestas.csv",
+                  "valueColumn": "respuesta_id"
+                }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Respuesta principal",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona la respuesta asociada a este estado.",
+              "note": "La respuesta debe explicar lo que el usuario necesita entender."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Requiere repregunta",
+            "dataColumn": "requiere_repregunta",
+            "type": "select",
+            "options": {
+              "staticValues": ["Si", "No"]
+            },
+            "help": {
+              "title": "Requiere repregunta",
+              "type": "Campo descriptivo",
+              "copy": "Indica si hace falta pedir un dato adicional al usuario.",
+              "note": "Usa esta opcion cuando la informacion obligatoria no este completa."
+            }
+          },
+          {
+            "label": "Texto de repregunta",
+            "dataColumn": "repregunta_si_falta",
+            "type": "text",
+            "help": {
+              "title": "Texto de repregunta",
+              "type": "Campo descriptivo",
+              "copy": "Escribe la pregunta de apoyo que se mostrara cuando falte informacion.",
+              "note": "Debe ser clara, breve y facil de responder."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nuevo estado",
+      "createLabel": "Guardar nuevo estado",
+      "updateLabel": "Actualizar registro"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda contextual",
+    "defaultTitle": "Ayuda contextual",
+    "defaultType": "Campo descriptivo",
+    "defaultCopy": "Enfoca un campo para ver una sugerencia breve y precisa.",
+    "defaultNote": "La ayuda cambia mientras el usuario navega entre los campos.",
+    "summary": [
+      "Describe el estado con lenguaje simple.",
+      "Indica con claridad cuando entra y cuando sale.",
+      "Define repreguntas solo cuando falte informacion."
+    ]
+  },
+  "tableConfig": {
+    "title": "Estados registrados ({count})",
+    "columns": [
+      {
+        "label": "Orden",
+        "dataColumn": "orden",
+        "width": {
+          "type": "max",
+          "value": 80
+        },
+        "style": {
+          "textAlign": "center"
+        }
+      },
+      {
+        "label": "Estado ID",
+        "dataColumn": "estado_id",
+        "width": {
+          "type": "min",
+          "value": 100
+        },
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      {
+        "label": "Entrada",
+        "dataColumn": "condicion_entrada",
+        "width": {
+          "type": "min",
+          "value": 150
+        },
+        "wordWrap": true
+      },
+      {
+        "label": "Salida",
+        "dataColumn": "condicion_salida",
+        "width": {
+          "type": "min",
+          "value": 150
+        },
+        "wordWrap": true
+      },
+      {
+        "label": "Siguiente",
+        "dataColumn": "siguiente_estado",
+        "width": {
+          "type": "min",
+          "value": 100
+        }
+      },
+      {
+        "label": "Repregunta",
+        "dataColumn": "requiere_repregunta",
+        "width": {
+          "type": "min",
+          "value": 90
+        },
+        "style": {
+          "textAlign": "center"
+        }
+      }
+    ]
+  },
+  "routes": {
+    "resumen": {
+      "label": "Anterior: Resumen",
+      "href": "../index.html"
+    },
+    "intenciones": {
+      "label": "Siguiente: Intenciones",
+      "href": "./formulario.html?config=03_intenciones.formulario.json"
+    }
+  },
+  "prev": "resumen",
+  "next": "intenciones"
+}

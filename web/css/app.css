@@ -179,6 +179,10 @@ textarea {
   padding: 12px 12px;
   font: inherit;
   color: var(--text-main);
+  opacity: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 input:focus,
@@ -192,6 +196,79 @@ textarea:focus {
 textarea {
   min-height: 84px;
   resize: vertical;
+}
+
+select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.custom-combo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-combo input {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* leave space for the caret inside the control */
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.custom-combo-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* icon is only indicative */
+  color: var(--text-muted);
+}
+
+.custom-combo-menu {
+  position: absolute;
+  left: 0;
+  right: 50px;
+  top: calc(100% + 6px);
+  z-index: 20;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  padding: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.custom-combo-option {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.custom-combo-option:hover {
+  background: #eef5ff;
+}
+
+.custom-combo-empty {
+  padding: 10px 12px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .input-group {
@@ -434,6 +511,130 @@ pre {
   font-size: 0.86rem;
   max-width: 300px;
   z-index: 99;
+}
+
+/* Alert Component Styles */
+.alert-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.alert-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  border-left: 4px solid;
+  animation: slideDown 0.3s ease forwards;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.alert-container[data-alert-type="success"] {
+  border-left-color: var(--ok);
+  background: #f1fef5;
+}
+
+.alert-container[data-alert-type="error"] {
+  border-left-color: var(--danger);
+  background: #fef7f6;
+}
+
+.alert-container[data-alert-type="info"] {
+  border-left-color: var(--brand);
+  background: #f5fbfb;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.alert-icon {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+}
+
+.alert-icon[data-alert-type="success"] {
+  color: var(--ok);
+}
+
+.alert-icon[data-alert-type="error"] {
+  color: var(--danger);
+}
+
+.alert-icon[data-alert-type="info"] {
+  color: var(--brand);
+}
+
+.alert-title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  flex: 1;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.alert-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-main);
+}
+
+.alert-message {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes reveal {
