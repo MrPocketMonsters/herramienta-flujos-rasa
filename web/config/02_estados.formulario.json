@@ -15,6 +15,7 @@
             "label": "ID del estado",
             "dataColumn": "estado_id",
             "type": "text",
+            "unique": true,
             "help": {
               "title": "ID del estado",
               "type": "Campo con impacto directo",

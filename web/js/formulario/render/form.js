@@ -134,7 +134,9 @@ function loadObjectFromForm(flujoId, rows) {
       var fieldId = field.id || slugify(dataColumn || label);
       var control = bySelector("#" + fieldId);
       if (control) {
-        obj[dataColumn] = control.value;
+        var value = control.value || "";
+        value = typeof value === "string" ? value.trim() : value;
+        obj[dataColumn] = value;
       }
     })
   });

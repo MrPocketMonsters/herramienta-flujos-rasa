@@ -80,6 +80,17 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     if (flowId)
       formData.flujo_id = flowId;
 
+    Object.keys(formData).forEach(function (key) {
+      if (!checkUnique(key, index, formData[key])) {
+        const error = new Error(
+          `El valor '${formData[key]}' para el campo '${key}' no es único. Por favor, ingresa un valor diferente.`
+        );
+        showError(error.message);
+        console.error(error);
+        return;
+      }
+    });
+
     if (index === Number.POSITIVE_INFINITY) {
       dataRows.push(formData);
       currentGlobalIndex = dataRows.length - 1;
@@ -91,6 +102,24 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     dataRows.unshift(descRow);
     await saveDataText(dataPath, toCsv(dataRows, headers));
     await reloadState(currentGlobalIndex);
+  }
+
+  function checkUnique(dataColumn, index, newValue) {
+    var field = config.formConfig.rows.reduce((acc, row) =>
+          acc.concat(row.fields || [])
+        , [])
+        .find((f) => (f.dataColumn === dataColumn) && f.unique)
+
+    if (!field)
+      return true;
+
+    var rows = flowId ? dataRows.filter((row) => row.flujo_id === flowId) : dataRows;
+    return !rows
+        .filter((row) => row[dataColumn])
+        .map((row) => String(row[dataColumn]))
+        .some((value, idx) =>
+          value === String(newValue) && idx !== index
+        );
   }
 
   bootstrap();
