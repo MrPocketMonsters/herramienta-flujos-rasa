@@ -513,6 +513,130 @@ pre {
   z-index: 99;
 }
 
+/* Alert Component Styles */
+.alert-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.alert-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  border-left: 4px solid;
+  animation: slideDown 0.3s ease forwards;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.alert-container[data-alert-type="success"] {
+  border-left-color: var(--ok);
+  background: #f1fef5;
+}
+
+.alert-container[data-alert-type="error"] {
+  border-left-color: var(--danger);
+  background: #fef7f6;
+}
+
+.alert-container[data-alert-type="info"] {
+  border-left-color: var(--brand);
+  background: #f5fbfb;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.alert-icon {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+}
+
+.alert-icon[data-alert-type="success"] {
+  color: var(--ok);
+}
+
+.alert-icon[data-alert-type="error"] {
+  color: var(--danger);
+}
+
+.alert-icon[data-alert-type="info"] {
+  color: var(--brand);
+}
+
+.alert-title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  flex: 1;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.alert-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-main);
+}
+
+.alert-message {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes reveal {
   to {
     opacity: 1;

@@ -1,7 +1,17 @@
 import { parseCsv, toObjects, toCsv } from '../utils/csv.js';
 import { getConfigPath, getFlowId, loadText, loadDataText } from './loaders.js';
 import { saveDataText } from './savers.js';
-import { renderForm, renderTable, renderNavigation, setPageInfo, wireContextPanel, setYear, showError, loadFormByIndex } from './render/render.js';
+import {
+  renderForm,
+  renderTable,
+  renderNavigation,
+  setPageInfo,
+  wireContextPanel,
+  setYear,
+  showError,
+  showSuccess,
+  loadFormByIndex
+} from './render/render.js';
 import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
 // Plantilla dinamica para renderizar formularios configurables desde JSON + CSV.
@@ -94,6 +104,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     dataRows.unshift(descRow);
     await saveDataText(dataPath, toCsv(dataRows, headers));
     await reloadState(currentGlobalIndex);
+    showSuccess("Los datos se han guardado correctamente.", "Guardado exitoso");
   }
 
   function validate(formData, index) {
@@ -110,6 +121,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       checkLimits(dataColumn, newValue);
       return true;
     } catch (error) {
+      showError(error && error.message ? error.message : "Error desconocido al validar el campo.");
       console.error(error);
       return false;
     }
@@ -128,21 +140,21 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
     var min = parseFloat(limits.min) || Number.NEGATIVE_INFINITY;
     if (min !== null && isNaN(min))
-      throw new Error(`El valor '${min}' para el límite mínimo del campo '${dataColumn}' no es un número válido.`);
+      throw new Error(`El valor '${min}' para el límite mínimo del campo '${field.label}' no es un número válido.`);
 
     var max = parseFloat(limits.max) || Number.POSITIVE_INFINITY;
     if (max !== null && isNaN(max))
-      throw new Error(`El valor '${max}' para el límite máximo del campo '${dataColumn}' no es un número válido.`);
+      throw new Error(`El valor '${max}' para el límite máximo del campo '${field.label}' no es un número válido.`);
 
     var numericValue = parseFloat(newValue);
     if (isNaN(numericValue))
-      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' no es un número válido.`);
+      throw new Error(`El valor '${newValue}' para el campo '${field.label}' no es un número válido.`);
 
     if (min !== null && numericValue < min)
-      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' es menor al mínimo permitido (${min}).`);
+      throw new Error(`El valor '${newValue}' para el campo '${field.label}' es menor al mínimo permitido (${min}).`);
 
     if (max !== null && numericValue > max)
-      throw new Error(`El valor '${newValue}' para el campo '${dataColumn}' es mayor al máximo permitido (${max}).`);
+      throw new Error(`El valor '${newValue}' para el campo '${field.label}' es mayor al máximo permitido (${max}).`);
   }
 
   function checkUnique(dataColumn, index, newValue) {
@@ -164,7 +176,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
     if (isValueDuplicate)
       throw new Error(
-        `El valor '${newValue}' para el campo '${dataColumn}' no es único. Por favor, ingresa un valor diferente.`
+        `El valor '${newValue}' para el campo '${field.label}' no es único. Por favor, ingresa un valor diferente.`
       );
   }
 

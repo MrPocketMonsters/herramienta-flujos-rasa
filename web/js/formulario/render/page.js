@@ -1,5 +1,6 @@
 import { bySelector, setText } from '../dom.js';
 import { renderTimeline } from './context.js';
+import { createAlert } from '../components/alert.js';
 
 export function setPageInfo(config) {
   var page = config.page || {};
@@ -28,13 +29,20 @@ export function setYear() {
   }
 }
 
-export function showError(message) {
-  var errorPanel = bySelector("[data-error-panel]");
-  var messageNode = bySelector("[data-error-message]");
-  if (messageNode) {
-    messageNode.textContent = message;
-  }
-  if (errorPanel) {
-    errorPanel.removeAttribute("hidden");
-  }
+export function showError(message, title) {
+  const alert = createAlert(
+    title || "No fue posible cargar el modulo",
+    "error",
+    message || "Revisa la ruta de configuracion e intenta nuevamente."
+  );
+  document.body.appendChild(alert);
+}
+
+export function showSuccess(message, title) {
+  const alert = createAlert(
+    title || "Operación exitosa",
+    "success",
+    message || "La operación se completó con éxito."
+  );
+  document.body.appendChild(alert);
 }
