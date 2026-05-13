@@ -49,27 +49,52 @@ export function toObjects(csvRows) {
   var headers = csvRows[0].map(function (item) {
     return String(item || "").trim();
   });
-  var dataRows = csvRows.slice(2);
+  var dataRows = csvRows.slice(1);
 
-  return dataRows
-    .map(function (row) {
-      var item = {};
-      var hasData = false;
+  return [
+    dataRows
+      .map(function (row) {
+        var item = {};
+        var hasData = false;
 
-      headers.forEach(function (header, idx) {
-        if (!header) {
-          return;
-        }
-        var value = idx < row.length ? String(row[idx] || "").trim() : "";
-        item[header] = value;
-        if (value !== "") {
-          hasData = true;
-        }
-      });
+        headers.forEach(function (header, idx) {
+          if (!header) {
+            return;
+          }
+          var value = idx < row.length ? String(row[idx] || "").trim() : "";
+          item[header] = value;
+          if (value !== "") {
+            hasData = true;
+          }
+        });
 
-      return hasData ? item : null;
-    })
-    .filter(function (item) {
-      return item !== null;
-    });
+        return hasData ? item : null;
+      })
+      .filter(function (item) {
+        return item !== null;
+      }),
+    headers
+  ];
+}
+
+export function toCsv(objects, headers) {
+  var csvRows = [];
+  csvRows.push(headers.join(","));
+
+  objects.forEach((obj) =>
+    csvRows.push(
+      headers.map(function (header) {
+        var value = String(obj[header] || "").replace(/"/g, '""');
+        if (value.indexOf(",") !== -1
+            || value.indexOf('"') !== -1
+            || value.indexOf("\n") !== -1)
+          value = '"' + value + '"';
+          
+        return value;
+      })
+      .join(",")
+    )
+  );
+
+  return csvRows.join("\n");
 }

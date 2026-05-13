@@ -2,6 +2,7 @@ import { slugify } from '../../utils/strings.js';
 import {
   bySelector,
   setText,
+  setAction,
   asHelp,
   normalizeRows
 } from '../dom.js';
@@ -61,7 +62,7 @@ function createInputControl(field, value, fieldOptions) {
   return group;
 }
 
-export function renderForm(config, fieldOptionsMap) {
+export function renderForm(config, fieldOptionsMap, onSaveRow) {
   var formRowsContainer = bySelector("#form-rows");
   if (!formRowsContainer) {
     return;
@@ -71,6 +72,7 @@ export function renderForm(config, fieldOptionsMap) {
 
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
+  var flujoId = "";
 
   rows.forEach(function (row, rowIndex) {
     var rowNode = document.createElement("div");
@@ -93,14 +95,17 @@ export function renderForm(config, fieldOptionsMap) {
 
   var actions = formConfig.actions || {};
   setText("[data-form-new]", actions.newLabel || "Nuevo registro");
-  setText("[data-form-save]", actions.saveLabel || "Guardar registro");
+  setAction("[data-form-new]", () => renderForm(config, fieldOptionsMap, onSaveRow));
+  setText("[data-form-save]", actions.createLabel || "Guardar nuevo registro");
+  setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(flujoId, rows)));
 }
 
-export function loadFormByIndex(config, dataRows, index) {
+export function loadFormByIndex(config, dataRows, index, onSaveRow) {
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
   var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
   var sampleRow = dataRows[safeIndex] || {};
+  var flujoId = sampleRow.flujo_id || "";
 
   rows.forEach(function (row) {
     (row.fields || []).forEach(function (field) {
@@ -115,4 +120,24 @@ export function loadFormByIndex(config, dataRows, index) {
       }
     });
   });
+  var actions = formConfig.actions || {};
+  setText("[data-form-save]", actions.updateLabel || "Actualizar registro");
+  setAction("[data-form-save]", () => onSaveRow(safeIndex, loadObjectFromForm(flujoId, rows)));
+}
+
+function loadObjectFromForm(flujoId, rows) {
+  var obj = {};
+  rows.forEach(function (row) {
+    (row.fields || []).forEach(function (field) {
+      var dataColumn = field.dataColumn || "";
+      var label = field.label || dataColumn || "Campo";
+      var fieldId = field.id || slugify(dataColumn || label);
+      var control = bySelector("#" + fieldId);
+      if (control) {
+        obj[dataColumn] = control.value;
+      }
+    })
+  });
+  obj.flujo_id = flujoId;
+  return obj;
 }

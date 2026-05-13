@@ -9,6 +9,13 @@ export function setText(selector, value) {
   }
 }
 
+export function setAction(selector, action) {
+  var button = bySelector(selector);
+  if (button && typeof action === "function") {
+    button.onclick = action;
+  }
+}
+
 export function asHelp(helpValue, label) {
   if (typeof helpValue === "string") {
     return {

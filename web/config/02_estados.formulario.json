@@ -151,8 +151,9 @@
       }
     ],
     "actions": {
-      "newLabel": "Nuevo registro",
-      "saveLabel": "Guardar registro"
+      "newLabel": "Nuevo estado",
+      "createLabel": "Guardar nuevo estado",
+      "updateLabel": "Actualizar registro"
     }
   },
   "contextConfig": {

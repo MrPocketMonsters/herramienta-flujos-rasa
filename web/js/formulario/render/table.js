@@ -48,7 +48,7 @@ function applyColumnWrap(element, wrapConfig) {
   }
 }
 
-export function renderTable(config, dataRows, onLoadRow) {
+export function renderTable(config, dataRows, onLoadRow, onSaveRow) {
   var headerRow = bySelector("[data-table-header-row]");
   var body = bySelector("[data-table-body]");
   if (!headerRow || !body) {
