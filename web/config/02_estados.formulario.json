@@ -16,11 +16,12 @@
             "dataColumn": "estado_id",
             "type": "text",
             "unique": true,
+            "regex": "^[a-zA-Z0-9_]+$",
             "help": {
               "title": "ID del estado",
               "type": "Campo con impacto directo",
               "copy": "Usa un identificador corto y unico que describa el paso del flujo.",
-              "note": "Evita espacios y nombres ambiguos para facilitar la lectura del proceso."
+              "note": "Usa nombres cortos y sin espacios, p. ej. estado_inicial."
             }
           },
           {

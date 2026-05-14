@@ -118,6 +118,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
   function validateColumn(dataColumn, index, newValue) {
     try {
       checkUnique(dataColumn, index, newValue);
+      checkRegex(dataColumn, newValue);
       checkLimits(dataColumn, newValue);
       return true;
     } catch (error) {
@@ -127,12 +128,16 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     }
   }
 
-  function checkLimits(dataColumn, newValue) {
-    var field = config.formConfig.rows.reduce((acc, row) =>
-          acc.concat(row.fields || [])
-        , [])
-        .find((f) => (f.dataColumn === dataColumn) && f.limits)
+  function findFieldConfig(dataColumn, configParam) {
+    return config.formConfig.rows.reduce((acc, row) =>
+          acc.concat(row.fields || []),
+          []
+        )
+        .find((f) => f.dataColumn === dataColumn && f[configParam]);
+  }
 
+  function checkLimits(dataColumn, newValue) {
+    var field = findFieldConfig(dataColumn, "limits");
     if (!field)
       return;
 
@@ -157,12 +162,20 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       throw new Error(`El valor '${newValue}' para el campo '${field.label}' es mayor al máximo permitido (${max}).`);
   }
 
-  function checkUnique(dataColumn, index, newValue) {
-    var field = config.formConfig.rows.reduce((acc, row) =>
-          acc.concat(row.fields || [])
-        , [])
-        .find((f) => (f.dataColumn === dataColumn) && f.unique)
+  function checkRegex(dataColumn, newValue) {
+    var field = findFieldConfig(dataColumn, "regex");
+    if (!field)
+      return;
 
+    var regexPattern = field.regex;
+    var regex = new RegExp(regexPattern);
+    if (!regex.test(newValue)) {
+      throw new Error(`El valor '${newValue}' para el campo '${field.label}' no cumple con el formato requerido.`);
+    }
+  }
+
+  function checkUnique(dataColumn, index, newValue) {
+    var field = findFieldConfig(dataColumn, "unique");
     if (!field)
       return;
 
