@@ -7,7 +7,7 @@
   "dataPath": "02_estados.csv",
   "formConfig": {
     "title": "2) Registro de estado",
-    "helper": "Estado que se puede alcanzar durante el flujo.",
+    "helper": "Define cada paso del proceso para que el flujo sea claro, trazable y sin ambiguedades.",
     "rows": [
       {
         "fields": [
@@ -20,8 +20,8 @@
             "help": {
               "title": "ID del estado",
               "type": "Campo con impacto directo",
-              "copy": "Usa un identificador corto y unico que describa el paso del flujo.",
-              "note": "Usa nombres cortos y sin espacios, p. ej. estado_inicial."
+              "copy": "Escribe el nombre tecnico unico del paso (por ejemplo, estado_inicial).",
+              "note": "Este valor se usa para referenciar el estado en otros formularios; si se repite o cambia sin control, se rompe la trazabilidad del flujo."
             }
           },
           {
@@ -33,9 +33,9 @@
             },
             "help": {
               "title": "Orden",
-              "type": "Campo con impacto directo",
-              "copy": "Indica la posicion secuencial del estado dentro del recorrido.",
-              "note": "Este valor ayuda a visualizar el avance del flujo."
+              "type": "Campo descriptivo",
+              "copy": "Indica en que posicion ocurre este estado dentro del proceso.",
+              "note": "Un orden correcto evita confusiones al revisar, validar y mantener el flujo."
             }
           }
         ]
@@ -49,8 +49,8 @@
             "help": {
               "title": "Descripcion funcional",
               "type": "Campo descriptivo",
-              "copy": "Resume que ocurre en este estado de forma clara.",
-              "note": "Describe una sola idea funcional por estado."
+              "copy": "Explica en lenguaje simple que hace este estado.",
+              "note": "No cambia el comportamiento tecnico, pero ayuda a que cualquier persona entienda el paso sin interpretar codigo."
             }
           }
         ]
@@ -63,9 +63,9 @@
             "type": "text",
             "help": {
               "title": "Condicion de entrada",
-              "type": "Campo con impacto directo",
-              "copy": "Escribe que debe cumplirse para entrar a este estado.",
-              "note": "Puede ser una condicion del usuario, del sistema o de los datos disponibles."
+              "type": "Campo descriptivo",
+              "copy": "Describe que debe estar listo para poder entrar a este estado.",
+              "note": "No entrena IA ni ejecuta reglas por si solo; sirve para alinear equipos sobre cuando inicia el paso."
             }
           },
           {
@@ -74,9 +74,9 @@
             "type": "text",
             "help": {
               "title": "Condicion de salida",
-              "type": "Campo con impacto directo",
-              "copy": "Escribe que debe ocurrir para avanzar al siguiente estado.",
-              "note": "La salida debe dejar claro cuando termina este paso."
+              "type": "Campo descriptivo",
+              "copy": "Describe que debe pasar para cerrar este estado y continuar.",
+              "note": "Ayuda a evitar bucles y cierres ambiguos al documentar el criterio de avance."
             }
           }
         ]
@@ -98,9 +98,9 @@
             },
             "help": {
               "title": "Siguiente estado",
-              "type": "Campo con impacto directo",
-              "copy": "Selecciona el estado al que debe continuar el flujo.",
-              "note": "Debe corresponder con el recorrido previsto del proceso."
+              "type": "Campo descriptivo",
+              "copy": "Selecciona el siguiente paso esperado del proceso.",
+              "note": "Permite visualizar la ruta del flujo y detectar saltos o inconsistencias de diseno."
             }
           },
           {
@@ -119,8 +119,8 @@
             "help": {
               "title": "Respuesta principal",
               "type": "Campo descriptivo",
-              "copy": "Selecciona la respuesta asociada a este estado.",
-              "note": "La respuesta debe explicar lo que el usuario necesita entender."
+              "copy": "Indica cual respuesta del bot representa mejor este estado.",
+              "note": "No se usa para entrenar intenciones; es una referencia para mantener coherencia del mensaje institucional."
             }
           }
         ]
@@ -137,8 +137,8 @@
             "help": {
               "title": "Requiere repregunta",
               "type": "Campo descriptivo",
-              "copy": "Indica si hace falta pedir un dato adicional al usuario.",
-              "note": "Usa esta opcion cuando la informacion obligatoria no este completa."
+              "copy": "Marca Si cuando el estado necesita pedir datos faltantes al usuario.",
+              "note": "Sirve para documentar manejo de informacion incompleta y reducir respuestas sin cierre claro."
             }
           },
           {
@@ -148,8 +148,8 @@
             "help": {
               "title": "Texto de repregunta",
               "type": "Campo descriptivo",
-              "copy": "Escribe la pregunta de apoyo que se mostrara cuando falte informacion.",
-              "note": "Debe ser clara, breve y facil de responder."
+              "copy": "Escribe la pregunta exacta que ayudara a completar el dato faltante.",
+              "note": "Un texto claro mejora la experiencia del usuario y reduce errores de interpretacion."
             }
           }
         ]
@@ -165,12 +165,12 @@
     "eyebrow": "Ayuda contextual",
     "defaultTitle": "Ayuda contextual",
     "defaultType": "Campo descriptivo",
-    "defaultCopy": "Enfoca un campo para ver una sugerencia breve y precisa.",
-    "defaultNote": "La ayuda cambia mientras el usuario navega entre los campos.",
+    "defaultCopy": "Selecciona un campo para ver que debes diligenciar y como ese dato afecta el flujo.",
+    "defaultNote": "La guia te indica si el campo impacta directamente el funcionamiento o solo documenta el proceso.",
     "summary": [
-      "Describe el estado con lenguaje simple.",
-      "Indica con claridad cuando entra y cuando sale.",
-      "Define repreguntas solo cuando falte informacion."
+      "Completa cada estado como un paso real del proceso.",
+      "Asegura entradas y salidas claras para evitar confusiones.",
+      "Usa repreguntas para capturar datos faltantes de forma guiada."
     ]
   },
   "tableConfig": {
