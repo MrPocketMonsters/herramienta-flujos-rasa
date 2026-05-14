@@ -71,7 +71,7 @@ async function loadDynamicRows(dataPath, configBaseUrl, mainDataPath, mainDataRo
   }
 
   var csvText = await loadDataText(normalizedDataPath, configBaseUrl);
-  var rows = filterRowsByFlow(toObjects(parseCsv(csvText)), flowId, { strict: false }).map(function (item) {
+  var rows = filterRowsByFlow(toObjects(parseCsv(csvText))[0], flowId, { strict: false }).map(function (item) {
     return item.row;
   });
   csvCache[normalizedDataPath] = rows;
