@@ -35,12 +35,15 @@ export function createDropdown(fieldId, selectOptions, allowCustom, initialValue
     buildEmpty();
   } else {
     selectOptions.forEach(function (optionValue) {
+      var label = optionValue && typeof optionValue === 'object' && optionValue.label ? optionValue.label : String(optionValue);
+      var real = optionValue && typeof optionValue === 'object' && optionValue.value ? optionValue.value : String(optionValue);
       var optionButton = document.createElement("button");
       optionButton.type = "button";
       optionButton.className = "custom-combo-option";
-      optionButton.textContent = optionValue;
+      optionButton.textContent = label;
       optionButton.addEventListener("click", function () {
-        input.value = optionValue;
+        input.value = label;
+        input.dataset.realValue = real;
         hideMenu();
         input.focus();
       });

@@ -75,7 +75,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
     if (Number.isFinite(selectedGlobalIndex)) {
       currentGlobalIndex = selectedGlobalIndex;
-      loadFormByIndex(config, dataRows, selectedGlobalIndex, saveRow);
+      loadFormByIndex(config, dataRows, selectedGlobalIndex, saveRow, fieldOptions);
     } else {
       currentGlobalIndex = null;
     }
@@ -84,7 +84,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
   function loadRow(index) {
     var selectedEntry = flowEntries[index] || { globalIndex: index };
     currentGlobalIndex = selectedEntry.globalIndex;
-    loadFormByIndex(config, dataRows, selectedEntry.globalIndex, saveRow);
+    loadFormByIndex(config, dataRows, selectedEntry.globalIndex, saveRow, fieldOptions);
   }
 
   async function saveRow(index, formData) {

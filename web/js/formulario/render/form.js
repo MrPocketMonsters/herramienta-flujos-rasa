@@ -100,7 +100,7 @@ export function renderForm(config, fieldOptionsMap, onSaveRow) {
   setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(flujoId, rows)));
 }
 
-export function loadFormByIndex(config, dataRows, index, onSaveRow) {
+export function loadFormByIndex(config, dataRows, index, onSaveRow, fieldOptionsMap) {
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
   var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
@@ -116,6 +116,17 @@ export function loadFormByIndex(config, dataRows, index, onSaveRow) {
 
       if (control && dataColumn) {
         var value = sampleRow[dataColumn] || "";
+        // If there are fieldOptions available, and the control uses option objects, map stored value -> visible label
+        var fieldOptions = fieldOptionsMap && fieldOptionsMap[fieldId] ? fieldOptionsMap[fieldId] : null;
+        if (fieldOptions && Array.isArray(fieldOptions.options)) {
+          var opt = fieldOptions.options.find(function (o) { return o && o.value ? String(o.value) === String(value) : String(o) === String(value); });
+          if (opt) {
+            control.dataset.realValue = String(value);
+            control.value = opt.label || String(value);
+            return;
+          }
+        }
+        // default: set raw value
         control.value = value;
       }
     });
@@ -134,7 +145,8 @@ function loadObjectFromForm(flujoId, rows) {
       var fieldId = field.id || slugify(dataColumn || label);
       var control = bySelector("#" + fieldId);
       if (control) {
-        var value = control.value || "";
+        var raw = control.dataset && control.dataset.realValue ? control.dataset.realValue : control.value;
+        var value = raw || "";
         value = typeof value === "string" ? value.trim() : value;
         obj[dataColumn] = value;
       }
