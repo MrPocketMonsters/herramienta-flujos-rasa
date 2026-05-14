@@ -46,6 +46,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
         throw new Error("La configuracion no incluye dataPath.");
       }
 
+      setPageInfo(config);
       await reloadState(null);
       renderNavigation(config);
       wireContextPanel();
