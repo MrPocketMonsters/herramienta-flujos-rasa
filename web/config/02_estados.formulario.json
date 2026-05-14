@@ -158,7 +158,7 @@
     "actions": {
       "newLabel": "Nuevo estado",
       "createLabel": "Guardar nuevo estado",
-      "updateLabel": "Actualizar registro"
+      "updateLabel": "Actualizar estado"
     }
   },
   "contextConfig": {

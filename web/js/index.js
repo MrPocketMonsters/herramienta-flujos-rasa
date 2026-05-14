@@ -13,6 +13,7 @@
     var configFiles = [
       "02_estados.formulario.json",
       "03_intenciones.formulario.json",
+      "04_entidades_slots.formulario.json",
     ];
 
     select.innerHTML = '';

@@ -155,7 +155,7 @@
     "actions": {
       "newLabel": "Nueva intención",
       "createLabel": "Guardar nueva intención",
-      "updateLabel": "Actualizar registro"
+      "updateLabel": "Actualizar intención"
     }
   },
   "contextConfig": {
