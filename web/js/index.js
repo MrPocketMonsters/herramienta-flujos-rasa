@@ -14,6 +14,7 @@
       "02_estados.formulario.json",
       "03_intenciones.formulario.json",
       "04_entidades_slots.formulario.json",
+      "05_respuestas.formulario.json",
     ];
 
     select.innerHTML = '';

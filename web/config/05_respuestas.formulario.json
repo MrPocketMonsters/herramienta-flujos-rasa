@@ -1,0 +1,242 @@
+{
+  "page": {
+    "badge": "R",
+    "title": "Registro de Respuestas",
+    "subtitle": "Define los textos que el bot mostrara y como se agrupan para cada estado."
+  },
+  "dataPath": "05_respuestas.csv",
+  "formConfig": {
+    "title": "5) Registro de respuesta",
+    "helper": "Configura los mensajes que el asistente entregara al usuario y las variantes que puede usar.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Respuesta ID",
+            "dataColumn": "respuesta_id",
+            "type": "text",
+            "unique": true,
+            "regex": "^utter_[a-zA-Z0-9_]+$",
+            "help": {
+              "title": "Respuesta ID",
+              "type": "Campo con impacto directo",
+              "copy": "Escribe el nombre tecnico unico de la respuesta que usara el bot.",
+              "note": "Este identificador se compila en las respuestas del asistente; debe empezar con 'utter_' para mantener la convencion del proyecto."
+            }
+          },
+          {
+            "label": "Estado asociado",
+            "dataColumn": "estado_id",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ]
+            },
+            "help": {
+              "title": "Estado asociado",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona el estado del flujo donde se usa esta respuesta.",
+              "note": "Ayuda a entender en que momento del proceso aparece el mensaje, aunque no cambia por si solo el texto compilado."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Tono",
+            "dataColumn": "tono",
+            "type": "select",
+            "options": {
+              "staticValues": [
+                { "label": "Formal y cercano", "value": "formal cercano" },
+                { "label": "Formal", "value": "formal" },
+                { "label": "Cercano", "value": "cercano" },
+                { "label": "Institucional", "value": "institucional" }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Tono",
+              "type": "Campo descriptivo",
+              "copy": "Elige el estilo con el que debe escribirse la respuesta.",
+              "note": "No entrena el modelo, pero ayuda a que los mensajes mantengan una voz coherente y facil de leer para el usuario."
+            }
+          },
+          {
+            "label": "Longitud",
+            "dataColumn": "longitud",
+            "type": "select",
+            "options": {
+              "staticValues": [
+                { "label": "Corta", "value": "corta" },
+                { "label": "Media", "value": "media" },
+                { "label": "Larga", "value": "larga" }
+              ]
+            },
+            "help": {
+              "title": "Longitud",
+              "type": "Campo descriptivo",
+              "copy": "Indica que tan extensa debe ser la respuesta.",
+              "note": "Ayuda a ajustar el texto al canal de mensajeria y a evitar mensajes demasiado largos para el usuario."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Contenido obligatorio",
+            "dataColumn": "contenido_obligatorio",
+            "type": "textarea",
+            "help": {
+              "title": "Contenido obligatorio",
+              "type": "Campo descriptivo",
+              "copy": "Escribe los elementos que no pueden faltar en el mensaje.",
+              "note": "Sirve como guia de calidad para revisar que la respuesta explique lo esencial del paso sin omitir datos importantes."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Texto base",
+            "dataColumn": "texto_base",
+            "type": "textarea",
+            "help": {
+              "title": "Texto base",
+              "type": "Campo con impacto directo",
+              "copy": "Escribe la respuesta principal que mostrara el bot.",
+              "note": "Este texto se compila directamente en las respuestas del asistente; aqui va la version utilizable para el usuario final."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Variantes",
+            "dataColumn": "variantes",
+            "type": "textarea",
+            "help": {
+              "title": "Variantes de respuesta",
+              "type": "Campo con impacto directo",
+              "copy": "Escribe versiones alternativas del texto separadas por |.",
+              "note": "El compilador divide este campo por barra vertical y genera respuestas equivalentes para dar mas flexibilidad al bot."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Fallback asociado",
+            "dataColumn": "fallback_asociado",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "05_respuestas.csv",
+                  "valueColumn": "respuesta_id"
+                }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Fallback asociado",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona la respuesta de respaldo cuando el sistema detecte confusion.",
+              "note": "No modifica el texto compilado por si solo, pero deja documentado que respuesta se usara si el bot necesita pedir aclaracion."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva respuesta",
+      "createLabel": "Guardar nueva respuesta",
+      "updateLabel": "Actualizar registro"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda contextual",
+    "defaultTitle": "Ayuda contextual",
+    "defaultType": "Campo descriptivo",
+    "defaultCopy": "Selecciona un campo para saber si define el mensaje que ve el usuario o si solo documenta el comportamiento.",
+    "defaultNote": "La ayuda explica que se compila, que se documenta y que debe cuidarse para mantener coherencia en el chatbot.",
+    "summary": [
+      "La respuesta base se compila en el bot y afecta lo que el usuario lee.",
+      "Las variantes permiten ofrecer textos equivalentes sin cambiar el sentido.",
+      "El estado, tono y longitud ayudan a documentar como debe sonar cada mensaje."
+    ]
+  },
+  "tableConfig": {
+    "title": "Respuestas registradas ({count})",
+    "columns": [
+      {
+        "label": "Respuesta",
+        "dataColumn": "respuesta_id",
+        "width": {
+          "type": "min",
+          "value": 190
+        },
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      {
+        "label": "Estado",
+        "dataColumn": "estado_id",
+        "width": {
+          "type": "min",
+          "value": 140
+        }
+      },
+      {
+        "label": "Tono",
+        "dataColumn": "tono",
+        "width": {
+          "type": "min",
+          "value": 120
+        }
+      },
+      {
+        "label": "Longitud",
+        "dataColumn": "longitud",
+        "width": {
+          "type": "min",
+          "value": 95
+        },
+        "style": {
+          "textAlign": "center"
+        }
+      },
+      {
+        "label": "Texto base",
+        "dataColumn": "texto_base",
+        "width": {
+          "type": "flex",
+          "value": 1
+        },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "entidades": {
+      "label": "Anterior: Entidades y Slots",
+      "href": "./formulario.html?config=04_entidades_slots.formulario.json"
+    },
+    "reglas": {
+      "label": "Siguiente: Reglas",
+      "href": "./formulario.html?config=06_reglas.formulario.json"
+    }
+  },
+  "prev": "entidades",
+  "next": "reglas"
+}

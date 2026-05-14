@@ -98,6 +98,12 @@ export function createDropdown(fieldId, selectOptions, allowCustom, initialValue
     }
   });
 
+  input.addEventListener("input", function () {
+    if (allowCustom) {
+      input.dataset.realValue = "";
+    }
+  });
+
   // Close menu when clicking outside or on Escape
   function onDocClick(e) {
     if (!combo.contains(e.target) && !menu.contains(e.target)) {
