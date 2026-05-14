@@ -12,6 +12,7 @@
 
     var configFiles = [
       "02_estados.formulario.json",
+      "03_intenciones.formulario.json",
     ];
 
     select.innerHTML = '';
@@ -33,8 +34,8 @@
     if (!select) return;
 
     var flowIds = [
-      "",
       "vinculacion_especial_docentes",
+      "",
     ];
 
     select.innerHTML = '';

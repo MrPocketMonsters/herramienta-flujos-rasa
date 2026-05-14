@@ -1,0 +1,218 @@
+{
+  "page": {
+    "badge": "I",
+    "title": "Registro de Intenciones",
+    "subtitle": "Formulario para definir intents y sus transiciones entre estados."
+  },
+  "dataPath": "03_intenciones.csv",
+  "formConfig": {
+    "title": "3) Registro de intención",
+    "helper": "Define como escribe el usuario y como el sistema interpreta esas frases para responder correctamente.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Intent (nombre técnico)",
+            "dataColumn": "intent",
+            "type": "text",
+            "unique": true,
+            "regex": "^[a-zA-Z0-9_]+$",
+            "help": {
+              "title": "Intent",
+              "type": "Campo con impacto directo",
+              "copy": "Nombre tecnico unico de la intencion que el sistema debe reconocer.",
+              "note": "Este identificador se usa en entrenamiento y configuracion conversacional; si cambia sin control, se pierde continuidad del flujo."
+            }
+          },
+          {
+            "label": "Tipo",
+            "dataColumn": "tipo",
+            "type": "select",
+            "options": {
+              "staticValues": ["entrada", "transicion", "salida"]
+            },
+            "help": {
+              "title": "Tipo de intent",
+              "type": "Campo descriptivo",
+              "copy": "Indica si la intencion abre, mueve o cierra el recorrido conversacional.",
+              "note": "No entrena el modelo por si solo; ayuda al equipo a entender para que sirve cada intencion."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Estado origen",
+            "dataColumn": "estado_origen",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Estado origen",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona desde que estado puede activarse esta intencion.",
+              "note": "Aporta trazabilidad del proceso y facilita detectar transiciones mal definidas."
+            }
+          },
+          {
+            "label": "Estado destino",
+            "dataColumn": "estado_destino",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Estado destino",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona a que estado debe pasar el flujo cuando se detecte esta intencion.",
+              "note": "Permite validar si la ruta propuesta coincide con el proceso operativo real."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Ejemplo 1",
+            "dataColumn": "ejemplo_1",
+            "type": "text",
+            "help": {
+              "title": "Ejemplo de usuario",
+              "type": "Campo para entrenamiento",
+              "copy": "Escribe una frase real que un usuario diria para expresar esta intencion.",
+              "note": "Este campo si entrena el modelo NLU; entre mejor ejemplo, mejor reconocimiento."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Ejemplo 2",
+            "dataColumn": "ejemplo_2",
+            "type": "text",
+            "help": {
+              "title": "Ejemplo de usuario",
+              "type": "Campo para entrenamiento",
+              "copy": "Agrega otra forma real en que el usuario podria pedir lo mismo.",
+              "note": "Variar palabras reduce errores de clasificacion en lenguaje natural."
+            }
+          },
+          {
+            "label": "Ejemplo 3",
+            "dataColumn": "ejemplo_3",
+            "type": "text",
+            "help": {
+              "title": "Ejemplo de usuario",
+              "type": "Campo para entrenamiento",
+              "copy": "Incluye una tercera variante de redaccion para la misma intencion.",
+              "note": "Mas diversidad linguistica mejora la cobertura de consultas reales."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Ejemplo 4",
+            "dataColumn": "ejemplo_4",
+            "type": "text",
+            "help": {
+              "title": "Ejemplo de usuario",
+              "type": "Campo para entrenamiento",
+              "copy": "Agrega una frase adicional con un estilo diferente de escritura.",
+              "note": "Ayuda a reconocer consultas informales, cortas o con sinonimos."
+            }
+          },
+          {
+            "label": "Ejemplo 5",
+            "dataColumn": "ejemplo_5",
+            "type": "text",
+            "help": {
+              "title": "Ejemplo de usuario",
+              "type": "Campo para entrenamiento",
+              "copy": "Incluye un ultimo ejemplo que represente otro contexto de uso.",
+              "note": "Un conjunto variado de ejemplos hace al modelo mas robusto y estable."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva intención",
+      "createLabel": "Guardar nueva intención",
+      "updateLabel": "Actualizar registro"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda contextual",
+    "defaultTitle": "Ayuda contextual",
+    "defaultType": "Campo descriptivo",
+    "defaultCopy": "Selecciona un campo para ver que informacion debes registrar y como afecta al chatbot.",
+    "defaultNote": "La ayuda te muestra si el dato entrena el modelo, define la logica o solo documenta el proceso.",
+    "summary": [
+      "Define un intent tecnico unico y estable.",
+      "Relaciona origen y destino para documentar la transicion.",
+      "Registra ejemplos reales para entrenar mejor el NLU."
+    ]
+  },
+  "tableConfig": {
+    "title": "Intenciones registradas ({count})",
+    "columns": [
+      {
+        "label": "Tipo",
+        "dataColumn": "tipo",
+        "width": { "type": "min", "value": 95 },
+        "style": { "textAlign": "center" }
+      },
+      {
+        "label": "Intent",
+        "dataColumn": "intent",
+        "width": { "type": "min", "value": 180 },
+        "style": { "fontWeight": "bold" }
+      },
+      {
+        "label": "Origen",
+        "dataColumn": "estado_origen",
+        "width": { "type": "min", "value": 140 }
+      },
+      {
+        "label": "Destino",
+        "dataColumn": "estado_destino",
+        "width": { "type": "min", "value": 140 }
+      },
+      {
+        "label": "Ejemplo Principal",
+        "dataColumn": "ejemplo_1",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "prev": {
+      "label": "Anterior: Estados",
+      "href": "./formulario.html?config=02_estados.formulario.json"
+    },
+    "next": {
+      "label": "Siguiente: Entidades/Slots",
+      "href": "./formulario.html?config=04_entidades_slots.formulario.json"
+    }
+  },
+  "prev": "prev",
+  "next": "next"
+}
