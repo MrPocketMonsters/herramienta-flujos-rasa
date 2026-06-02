@@ -1,0 +1,113 @@
+{
+  "page": {
+    "badge": "H",
+    "title": "Registro de Historias",
+    "subtitle": "Describe recorridos completos de conversación con pasos claros y ordenados."
+  },
+  "dataPath": "07_historias.csv",
+  "formConfig": {
+    "title": "7) Registro de historias",
+    "helper": "Cuenta una conversación completa paso a paso, desde lo que dice el usuario hasta lo que hace el sistema.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Nombre de la historia",
+            "dataColumn": "story_name",
+            "type": "text",
+            "unique": true,
+            "regex": "^[a-zA-Z0-9_ ]+$",
+            "help": {
+              "title": "Nombre de la historia",
+              "type": "Importante",
+              "copy": "Escribe un nombre corto que permita reconocer esta conversación de un vistazo.",
+              "note": "Usa un nombre claro para que el equipo sepa de qué caso se trata."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Secuencia de pasos",
+            "dataColumn": "secuencia",
+            "type": "textarea",
+            "help": {
+              "title": "Secuencia de pasos",
+              "type": "Descripción",
+              "copy": "Escribe la conversación en orden, separando cada paso con '>'. Usa un formato simple como intent:... o action:... para que se entienda qué hace el usuario y qué responde el sistema.",
+              "note": "La secuencia debe mostrar el recorrido completo de la historia, sin saltarse pasos importantes."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Notas",
+            "dataColumn": "notas",
+            "type": "textarea",
+            "help": {
+              "title": "Notas",
+              "type": "Descripción",
+              "copy": "Agrega aclaraciones sobre el objetivo de esta historia o sobre alguna parte del recorrido.",
+              "note": "Sirve para explicar el contexto y ayudar a revisar si la historia quedó bien armada."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva historia",
+      "createLabel": "Guardar nueva historia",
+      "updateLabel": "Actualizar historia"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda rápida",
+    "defaultTitle": "Cómo completar este formulario",
+    "defaultType": "Guía",
+    "defaultCopy": "Describe el recorrido de una conversación completa de forma ordenada y fácil de leer.",
+    "defaultNote": "La historia sirve para mostrar cómo se comporta el flujo cuando se sigue una secuencia específica.",
+    "summary": [
+      "Pon un nombre claro para identificar la historia rápidamente.",
+      "Escribe cada paso en orden usando separadores simples.",
+      "Usa las notas para explicar por qué esta historia es importante."
+    ]
+  },
+  "tableConfig": {
+    "title": "Historias registradas ({count})",
+    "columns": [
+      {
+        "label": "Historia",
+        "dataColumn": "story_name",
+        "width": { "type": "min", "value": 220 },
+        "style": { "fontWeight": "bold" }
+      },
+      {
+        "label": "Secuencia",
+        "dataColumn": "secuencia",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Notas",
+        "dataColumn": "notas",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "reglas": {
+      "label": "Anterior: Reglas",
+      "href": "./formulario.html?config=06_reglas.formulario.json"
+    },
+    "fuentes": {
+      "label": "Siguiente: Fuentes de información",
+      "href": "./formulario.html?config=08_fuentes_datos.formulario.json"
+    }
+  },
+  "prev": "reglas",
+  "next": "fuentes"
+}

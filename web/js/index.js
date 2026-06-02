@@ -16,6 +16,8 @@
       "04_entidades_slots.formulario.json",
       "05_respuestas.formulario.json",
       "06_reglas.formulario.json",
+      "07_historias.formulario.json",
+      "08_fuentes_datos.formulario.json",
     ];
 
     select.innerHTML = '';
