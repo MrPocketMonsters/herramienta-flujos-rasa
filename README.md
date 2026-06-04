@@ -6,7 +6,7 @@ Además, se provee una aplicación web portable: la interfaz se abre localmente 
 
 Se pretende que personas sin formación técnica en IT aporten al diseño funcional del flujo mediante lenguaje natural. Para ello, el workbook está concebido para ser diligenciado por personal de negocio u operativo; posteriormente, un administrador del sistema realiza la revisión y normalización de los campos técnicos, condiciones y snippets generados.
 
-## Propósito
+## Enfoque de diseño
 
 El proyecto separa dos momentos del trabajo:
 
@@ -16,7 +16,7 @@ El proyecto separa dos momentos del trabajo:
 
 Se aplica este flujo con el fin de capturar intención funcional sin exigir conocimiento técnico sobre intents, slots, reglas o sintaxis YAML.
 
-El objetivo de la aplicación web es reducir la fricción asociada a la plantilla Excel (que requiere gestión por filas), al transformar dicha plantilla en una interfaz más comprensible y utilizable por personal no técnico.
+El objetivo de la aplicación web es reducir los tiempos de desarrollo iterativo donde un ingeniero traduce requisitos funcionales a formato técnico, permitiendo que el equipo de negocio pueda ajustar y validar los flujos directamente sobre los CSV, con una interfaz amigable que abstrae la complejidad técnica.
 
 ## Estructura del repositorio
 
@@ -106,6 +106,7 @@ El detalle de cada CSV y su hoja correspondiente está documentado en [data/READ
 - Python 3.12
 - `openpyxl` para leer el workbook Excel
 - Tauri para empaquetar la interfaz como app portable de escritorio
+- Rust y Cargo para compilar la app de escritorio
 - Javascript para el frontend, con enfoque modular y componentes reutilizables.
 
 Las dependencias están en [requirements.txt](requirements.txt).
@@ -156,6 +157,14 @@ cargo tauri build      # Modo release (ejecutable final)
 
 El binario final estará en `src-tauri/target/release/herramienta-flujos-rasa` (Linux) o `.exe` (Windows).
 
+Si es claro lo que está sucediendo, para pruebas rápidas se puede usar el script `build-and-run.sh` que compila la app, la mueve a la raíz del proyecto y la ejecuta:
+
+```bash
+./build-and-run.sh
+```
+
+Esto permite realizar modificaciones rápidas en el código Rust o en la interfaz web y probarlas sin salir del entorno de desarrollo.
+
 ### Para usuarios finales
 
 1. Descarga la carpeta de distribución (contiene `herramienta-flujos-rasa` + `data/`).
@@ -168,32 +177,6 @@ Para detalles sobre cómo se cargan los CSV en tiempo de ejecución, ver [docs/T
 La app de escritorio se compila desde `src-tauri/` y toma los archivos estáticos desde `web/`.
 
 Consulta [docs/TAURI_BUILD.md](docs/TAURI_BUILD.md) para instrucciones detalladas por plataforma, dependencias del sistema y resolución de problemas.
-
-## Flujo recomendado para usuarios no técnicos
-
-1. Abrir [data/flujo_conversacional.xlsx](data/flujo_conversacional.xlsx).
-2. Diligenciar cada hoja con lenguaje natural y ejemplos reales.
-3. Completar campos como condiciones, tipos de slot, validaciones y repreguntas usando la mejor descripción funcional posible, no sintaxis técnica.
-4. Validar el checklist.
-5. Ejecutar `tools/xlsx_a_csv.py` para actualizar los CSV en [data/](data/).
-6. Ejecutar `tools/compilar_flujo_csv.py` para generar los snippets técnicos.
-7. El administrador del sistema revisa los CSV y los snippets generados, y ajusta los nombres técnicos, reglas, slots y respuestas finales.
-
-## Criterio de diseño
-
-Este repositorio no busca que la persona que diseña el flujo conozca IT, Rasa o YAML.
-
-La expectativa es que esa persona aporte:
-
-- objetivos del flujo
-- estados o pasos del proceso
-- ejemplos de intentos o preguntas frecuentes del usuario
-- entidades o datos esperados en lenguaje natural
-- condiciones funcionales
-- respuestas esperadas
-- fuentes de datos
-
-Después, una persona administradora traduce y normaliza esos insumos al formato técnico que el sistema necesita.
 
 ## Referencia administrativa clave
 
@@ -213,6 +196,16 @@ Recomendación de uso del manual junto con este repo:
 3. Exportar a CSV y compilar snippets.
 4. Ejecutar la revisión técnica final por parte del administrador.
 
+## Flujo recomendado para usuarios no técnicos
+
+1. Abrir [data/flujo_conversacional.xlsx](data/flujo_conversacional.xlsx).
+2. Diligenciar cada hoja con lenguaje natural y ejemplos reales.
+3. Completar campos como condiciones, tipos de slot, validaciones y repreguntas usando la mejor descripción funcional posible, no sintaxis técnica.
+4. Validar el checklist.
+5. Ejecutar `tools/xlsx_a_csv.py` para actualizar los CSV en [data/](data/).
+6. Ejecutar `tools/compilar_flujo_csv.py` para generar los snippets técnicos.
+7. El administrador del sistema revisa los CSV y los snippets generados, y ajusta los nombres técnicos, reglas, slots y respuestas finales.
+
 ## Salida generada
 
 El resultado del proceso de compilación puede incluir:
@@ -223,10 +216,3 @@ El resultado del proceso de compilación puede incluir:
 - `stories_snippet.yml`
 - `resumen_flujo.md`
 - `trazabilidad_fuentes.md`
-
-## Notas
-
-- La hoja `00_introduccion_libro` funciona como contexto general del workbook.
-- La primera fila descriptiva de cada hoja no forma parte del CSV exportado.
-
-Para probar el formulario localmente, abrir `web/index.html` o `web/index-mock.html` en el navegador y navegar a la sección de formulario. Para incluir los cambios en la app compilada, reconstruir los assets web y seguir el flujo de empaquetado descrito en [docs/TAURI_BUILD.md](docs/TAURI_BUILD.md).
