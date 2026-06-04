@@ -216,3 +216,21 @@ El resultado del proceso de compilación puede incluir:
 - `stories_snippet.yml`
 - `resumen_flujo.md`
 - `trazabilidad_fuentes.md`
+
+## Siguientes pasos
+
+### Corto plazo
+
+- Eliminar mocks usados para guiar diseño.
+  - ./web/index-mock.html
+  - ./web/js/mockups.js
+  - ./web/html/estados.html
+  - ./web/html/intentenciones.html
+- Remodelar página principal para llevar a documentación o a selector de flujos.
+- Generar documentación embebida en la interfaz web para guiar a los usuarios en el proceso de diseño y edición de flujos.
+
+### Mediano plazo
+
+- Actualmente, un gran generador de fricción para el diseño de los flujos por parte del gestor del conocimiento está en las tablas 06_reglas.csv y 07_historias.csv, que requieren un conocimiento medianamente técnico para ser diligenciadas. En el futuro, la interacción entre 02_estados.csv, 03_intenciones.csv, 04_entidades_slots.csv y 05_respuestas.csv debería ser suficiente para generar automáticamente las reglas e historias básicas en su formato mixto con lenguaje natural para que el ingeniero encargado sólo se encargue de normalizar y ajustar lengual técnico, sin necesidad de escribir reglas o historias desde cero.
+
+- Una funcionalidad que ha quedado sin implementación es la de los mensajes de repregunta. Se permite definirlos por parte del usuario, pero no se han incluido en la generación de snippets. En iteraciones futuras se podría incluir esta funcionalidad, que es clave para mejorar la experiencia conversacional y reducir los casos de fallback.
