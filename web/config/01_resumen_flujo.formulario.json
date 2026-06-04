@@ -1,0 +1,165 @@
+{
+  "page": {
+    "badge": "F1",
+    "title": "Formulario de Flujo",
+    "subtitle": "Completa la información general del flujo antes de registrar módulos específicos."
+  },
+  "dataPath": "01_resumen_flujo.csv",
+  "formConfig": {
+    "title": "1) Resumen del flujo",
+    "helper": "Describe el objetivo y el alcance del flujo con lenguaje claro para el equipo administrativo.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Identificador del flujo",
+            "dataColumn": "flujo_id",
+            "type": "text",
+            "unique": true,
+            "regex": "^[a-zA-Z0-9_]+$",
+            "help": {
+              "title": "Identificador del flujo",
+              "type": "Importante",
+              "copy": "Escribe un nombre técnico corto y único para identificar este flujo (por ejemplo: vinculacion_especial_docentes).",
+              "note": "Este identificador conecta todos los formularios del mismo flujo."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Objetivo",
+            "dataColumn": "objetivo",
+            "type": "textarea",
+            "help": {
+              "title": "Objetivo",
+              "type": "Descripción",
+              "copy": "Describe qué resultado concreto debe lograr este flujo.",
+              "note": "Debe ser claro, medible y comprensible para el área responsable."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Alcance",
+            "dataColumn": "alcance",
+            "type": "textarea",
+            "help": {
+              "title": "Alcance",
+              "type": "Descripción",
+              "copy": "Explica qué cubre este flujo de principio a fin.",
+              "note": "Evita incluir procesos que no pertenecen a este caso."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Temas que sí cubre",
+            "dataColumn": "in_scope",
+            "type": "textarea",
+            "help": {
+              "title": "Temas que sí cubre",
+              "type": "Descripción",
+              "copy": "Anota los temas que este flujo sí debe resolver.",
+              "note": "Esto ayuda a mantener respuestas consistentes para el usuario."
+            }
+          },
+          {
+            "label": "Temas que no cubre",
+            "dataColumn": "out_scope",
+            "type": "textarea",
+            "help": {
+              "title": "Temas que no cubre",
+              "type": "Descripción",
+              "copy": "Anota los temas que este flujo no debe resolver.",
+              "note": "Sirve para definir límites y evitar confusiones con otros procesos."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Criterio de cierre",
+            "dataColumn": "criterio_cierre",
+            "type": "textarea",
+            "help": {
+              "title": "Criterio de cierre",
+              "type": "Importante",
+              "copy": "Escribe cuándo se considera que la conversación puede finalizar.",
+              "note": "Debe dejar claro en qué momento el usuario queda orientado."
+            }
+          },
+          {
+            "label": "Criterio de cierre operativo",
+            "dataColumn": "criterio_cierre_operativo",
+            "type": "textarea",
+            "help": {
+              "title": "Criterio de cierre operativo",
+              "type": "Importante",
+              "copy": "Define cómo validar que el flujo funcionó correctamente a nivel operativo.",
+              "note": "Incluye validaciones como registro completo y ausencia de bucles no deseados."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nuevo flujo",
+      "createLabel": "Guardar flujo",
+      "updateLabel": "Actualizar flujo"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda rápida",
+    "defaultTitle": "Cómo completar este formulario",
+    "defaultType": "Guía",
+    "defaultCopy": "Completa los campos del resumen con lenguaje claro para que cualquier área entienda el propósito del flujo.",
+    "defaultNote": "Esta es la vista inicial del flujo: aquí se define la base antes de pasar a estados, intenciones y demás módulos.",
+    "summary": [
+      "Define un identificador único para relacionar todos los módulos del flujo.",
+      "Describe objetivo y alcance en lenguaje claro y verificable.",
+      "Aclara qué temas sí y no cubre el flujo para evitar respuestas fuera de contexto."
+    ]
+  },
+  "tableConfig": {
+    "title": "Flujos registrados ({count})",
+    "columns": [
+      {
+        "label": "Flujo",
+        "dataColumn": "flujo_id",
+        "width": { "type": "min", "value": 220 },
+        "style": { "fontWeight": "bold" }
+      },
+      {
+        "label": "Objetivo",
+        "dataColumn": "objetivo",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Alcance",
+        "dataColumn": "alcance",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "inicio": {
+      "label": "Volver al selector",
+      "href": "../index.html"
+    },
+    "estados": {
+      "label": "Siguiente: Estados",
+      "href": "./formulario.html?config=02_estados.formulario.json"
+    }
+  },
+  "prev": "inicio",
+  "next": "estados"
+}

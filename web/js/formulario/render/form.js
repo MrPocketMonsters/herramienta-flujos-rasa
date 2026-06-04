@@ -97,7 +97,7 @@ export function renderForm(config, fieldOptionsMap, onSaveRow) {
   setText("[data-form-new]", actions.newLabel || "Nuevo registro");
   setAction("[data-form-new]", () => renderForm(config, fieldOptionsMap, onSaveRow));
   setText("[data-form-save]", actions.createLabel || "Guardar nuevo registro");
-  setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(flujoId, rows)));
+  setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(rows)));
 }
 
 export function loadFormByIndex(config, dataRows, index, onSaveRow, fieldOptionsMap) {
@@ -105,7 +105,6 @@ export function loadFormByIndex(config, dataRows, index, onSaveRow, fieldOptions
   var rows = normalizeRows(formConfig.rows || []);
   var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
   var sampleRow = dataRows[safeIndex] || {};
-  var flujoId = sampleRow.flujo_id || "";
 
   rows.forEach(function (row) {
     (row.fields || []).forEach(function (field) {
@@ -133,10 +132,10 @@ export function loadFormByIndex(config, dataRows, index, onSaveRow, fieldOptions
   });
   var actions = formConfig.actions || {};
   setText("[data-form-save]", actions.updateLabel || "Actualizar registro");
-  setAction("[data-form-save]", () => onSaveRow(safeIndex, loadObjectFromForm(flujoId, rows)));
+  setAction("[data-form-save]", () => onSaveRow(safeIndex, loadObjectFromForm(rows)));
 }
 
-function loadObjectFromForm(flujoId, rows) {
+function loadObjectFromForm(rows) {
   var obj = {};
   rows.forEach(function (row) {
     (row.fields || []).forEach(function (field) {
@@ -152,6 +151,5 @@ function loadObjectFromForm(flujoId, rows) {
       }
     })
   });
-  obj.flujo_id = flujoId;
   return obj;
 }

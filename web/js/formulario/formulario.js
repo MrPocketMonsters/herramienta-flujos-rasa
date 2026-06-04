@@ -5,6 +5,7 @@ import {
   renderForm,
   renderTable,
   renderNavigation,
+  renderCarousel,
   setPageInfo,
   wireContextPanel,
   setYear,
@@ -13,6 +14,7 @@ import {
   loadFormByIndex
 } from './render/render.js';
 import { filterRowsByFlow, resolveFieldOptions } from './options.js';
+import { FLOW_FORM_CONFIG_DATA_PATH } from '../../config/config.js';
 
 // Plantilla dinamica para renderizar formularios configurables desde JSON + CSV.
 (function () {
@@ -33,7 +35,6 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       setYear();
 
       var configPath = getConfigPath();
-      flowId = getFlowId();
       configUrl = new URL(configPath, window.location.href);
       var configText = await loadText(configUrl.href);
       if (!(configText && configText.startsWith("{"))) {
@@ -45,6 +46,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       if (!dataPath) {
         throw new Error("La configuracion no incluye dataPath.");
       }
+      flowId = initFlowId();
 
       setPageInfo(config);
       await reloadState(null);
@@ -56,6 +58,17 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     }
   }
 
+  function isFlowView() {
+    return dataPath == FLOW_FORM_CONFIG_DATA_PATH;
+  }
+
+  function initFlowId() {
+    if (isFlowView())
+      return "";
+
+    return getFlowId() || "";
+  }
+
   async function reloadState(selectedGlobalIndex) {
     var csvText = await loadDataText(dataPath, configUrl.href);
     var parsed = toObjects(parseCsv(csvText));
@@ -63,7 +76,8 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     descRow = dataRows.shift() || {};
     headers = parsed[1] || [];
 
-    flowEntries = filterRowsByFlow(dataRows, flowId, { strict: false });
+    const filterFlowId = isFlowView() ? "" : flowId;
+    flowEntries = filterRowsByFlow(dataRows, filterFlowId, { strict: false });
     visibleRows = flowEntries.map(function (entry) {
       return entry.row;
     });
@@ -85,10 +99,15 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     var selectedEntry = flowEntries[index] || { globalIndex: index };
     currentGlobalIndex = selectedEntry.globalIndex;
     loadFormByIndex(config, dataRows, selectedEntry.globalIndex, saveRow, fieldOptions);
+
+    if (isFlowView()) {
+      flowId = selectedEntry.row.flujo_id || "";
+      renderCarousel(config, flowId);
+    }
   }
 
   async function saveRow(index, formData) {
-    if (flowId)
+    if (!isFlowView() && flowId)
       formData.flujo_id = flowId;
 
     if (!validate(formData, index))
@@ -106,6 +125,11 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     await saveDataText(dataPath, toCsv(dataRows, headers));
     await reloadState(currentGlobalIndex);
     showSuccess("Los datos se han guardado correctamente.", "Guardado exitoso");
+
+    if (isFlowView()) {
+      flowId = formData.flujo_id || flowId;
+      renderCarousel(config, flowId);
+    }
   }
 
   function validate(formData, index) {

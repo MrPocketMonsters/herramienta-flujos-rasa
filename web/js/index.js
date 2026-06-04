@@ -11,6 +11,7 @@
     if (!select) return;
 
     var configFiles = [
+      "01_resumen_flujo.formulario.json",
       "02_estados.formulario.json",
       "03_intenciones.formulario.json",
       "04_entidades_slots.formulario.json",

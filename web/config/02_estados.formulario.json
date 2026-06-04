@@ -240,7 +240,7 @@
   "routes": {
     "resumen": {
       "label": "Anterior: Resumen",
-      "href": "../index.html"
+      "href": "./formulario.html?config=01_resumen_flujo.formulario.json"
     },
     "intenciones": {
       "label": "Siguiente: Intenciones",
