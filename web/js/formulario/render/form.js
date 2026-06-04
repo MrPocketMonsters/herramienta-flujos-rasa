@@ -97,15 +97,14 @@ export function renderForm(config, fieldOptionsMap, onSaveRow) {
   setText("[data-form-new]", actions.newLabel || "Nuevo registro");
   setAction("[data-form-new]", () => renderForm(config, fieldOptionsMap, onSaveRow));
   setText("[data-form-save]", actions.createLabel || "Guardar nuevo registro");
-  setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(flujoId, rows)));
+  setAction("[data-form-save]", () => onSaveRow(Number.POSITIVE_INFINITY, loadObjectFromForm(rows)));
 }
 
-export function loadFormByIndex(config, dataRows, index, onSaveRow) {
+export function loadFormByIndex(config, dataRows, index, onSaveRow, fieldOptionsMap) {
   var formConfig = config.formConfig || {};
   var rows = normalizeRows(formConfig.rows || []);
   var safeIndex = Number.isFinite(index) ? Math.max(0, Math.min(index, dataRows.length - 1)) : 0;
   var sampleRow = dataRows[safeIndex] || {};
-  var flujoId = sampleRow.flujo_id || "";
 
   rows.forEach(function (row) {
     (row.fields || []).forEach(function (field) {
@@ -116,16 +115,27 @@ export function loadFormByIndex(config, dataRows, index, onSaveRow) {
 
       if (control && dataColumn) {
         var value = sampleRow[dataColumn] || "";
+        // If there are fieldOptions available, and the control uses option objects, map stored value -> visible label
+        var fieldOptions = fieldOptionsMap && fieldOptionsMap[fieldId] ? fieldOptionsMap[fieldId] : null;
+        if (fieldOptions && Array.isArray(fieldOptions.options)) {
+          var opt = fieldOptions.options.find(function (o) { return o && o.value ? String(o.value) === String(value) : String(o) === String(value); });
+          if (opt) {
+            control.dataset.realValue = String(value);
+            control.value = opt.label || String(value);
+            return;
+          }
+        }
+        // default: set raw value
         control.value = value;
       }
     });
   });
   var actions = formConfig.actions || {};
   setText("[data-form-save]", actions.updateLabel || "Actualizar registro");
-  setAction("[data-form-save]", () => onSaveRow(safeIndex, loadObjectFromForm(flujoId, rows)));
+  setAction("[data-form-save]", () => onSaveRow(safeIndex, loadObjectFromForm(rows)));
 }
 
-function loadObjectFromForm(flujoId, rows) {
+function loadObjectFromForm(rows) {
   var obj = {};
   rows.forEach(function (row) {
     (row.fields || []).forEach(function (field) {
@@ -134,12 +144,12 @@ function loadObjectFromForm(flujoId, rows) {
       var fieldId = field.id || slugify(dataColumn || label);
       var control = bySelector("#" + fieldId);
       if (control) {
-        var value = control.value || "";
+        var raw = control.dataset && control.dataset.realValue ? control.dataset.realValue : control.value;
+        var value = raw || "";
         value = typeof value === "string" ? value.trim() : value;
         obj[dataColumn] = value;
       }
     })
   });
-  obj.flujo_id = flujoId;
   return obj;
 }

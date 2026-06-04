@@ -11,7 +11,14 @@
     if (!select) return;
 
     var configFiles = [
+      "01_resumen_flujo.formulario.json",
       "02_estados.formulario.json",
+      "03_intenciones.formulario.json",
+      "04_entidades_slots.formulario.json",
+      "05_respuestas.formulario.json",
+      "06_reglas.formulario.json",
+      "07_historias.formulario.json",
+      "08_fuentes_datos.formulario.json",
     ];
 
     select.innerHTML = '';
@@ -33,8 +40,8 @@
     if (!select) return;
 
     var flowIds = [
-      "",
       "vinculacion_especial_docentes",
+      "",
     ];
 
     select.innerHTML = '';

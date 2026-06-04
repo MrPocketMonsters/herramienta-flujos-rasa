@@ -1,0 +1,264 @@
+{
+  "page": {
+    "badge": "ES",
+    "title": "Registro de Entidades y Slots",
+    "subtitle": "Define que datos extrae el bot y como los guarda para continuar el flujo."
+  },
+  "dataPath": "04_entidades_slots.csv",
+  "formConfig": {
+    "title": "4) Registro de entidades y slots",
+    "helper": "Configura las variables que el asistente identifica en el mensaje del usuario y reutiliza en pasos posteriores.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Entidad",
+            "dataColumn": "entidad",
+            "type": "text",
+            "unique": true,
+            "regex": "^[a-zA-Z0-9_]+$",
+            "help": {
+              "title": "Entidad",
+              "type": "Campo con impacto directo",
+              "copy": "Nombre tecnico del dato que se quiere extraer del mensaje del usuario.",
+              "note": "Este nombre se usa como referencia central del dato; evita espacios y duplicados para no romper consistencia."
+            }
+          },
+          {
+            "label": "Estado donde aplica",
+            "dataColumn": "estado_donde_aplica",
+            "type": "select",
+            "options": {
+              "dynamicValues": [
+                {
+                  "dataPath": "02_estados.csv",
+                  "valueColumn": "estado_id"
+                }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Estado donde aplica",
+              "type": "Campo descriptivo",
+              "copy": "Indica en que estado del flujo se necesita capturar este dato.",
+              "note": "Sirve para trazabilidad del proceso y para evitar pedir informacion fuera de contexto."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Descripcion",
+            "dataColumn": "descripcion",
+            "type": "textarea",
+            "help": {
+              "title": "Descripcion funcional",
+              "type": "Campo descriptivo",
+              "copy": "Explica en lenguaje simple que representa esta entidad.",
+              "note": "Ayuda al equipo funcional a entender el dato sin leer configuraciones tecnicas."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Slot",
+            "dataColumn": "slot",
+            "type": "text",
+            "unique": true,
+            "regex": "^slot_[a-zA-Z0-9_]+$",
+            "help": {
+              "title": "Slot",
+              "type": "Campo con impacto directo",
+              "copy": "Nombre de la variable donde el bot almacenara el valor extraido.",
+              "note": "Debe iniciar con 'slot_' para mantener un estandar claro y facilitar mantenimiento tecnico."
+            }
+          },
+          {
+            "label": "Tipo de slot",
+            "dataColumn": "tipo_slot",
+            "type": "select",
+            "options": {
+              "staticValues": [
+                { "label": "Texto (cadena)", "value": "text" },
+                { "label": "Número entero", "value": "int" },
+                { "label": "Booleano (Si/No)", "value": "bool" },
+                { "label": "Número decimal", "value": "float" },
+                { "label": "Lista de valores", "value": "list" },
+                { "label": "Categoría (valor limitado)", "value": "categorical" }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Tipo de slot",
+              "type": "Campo descriptivo",
+              "copy": "Selecciona el tipo de dato esperado para guardar el valor.",
+              "note": "No entrena el modelo por si solo, pero documenta como debe interpretarse y validar el dato."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Obligatoria",
+            "dataColumn": "obligatoria",
+            "type": "select",
+            "options": {
+              "staticValues": ["Si", "No"]
+            },
+            "help": {
+              "title": "Obligatoria",
+              "type": "Campo descriptivo",
+              "copy": "Marca si este dato es necesario para que el flujo avance.",
+              "note": "Permite documentar cuando debe activarse una repregunta por informacion faltante."
+            }
+          },
+          {
+            "label": "Estrategia de extraccion",
+            "dataColumn": "estrategia_extraccion",
+            "type": "select",
+            "options": {
+              "staticValues": [
+                {"label": "Desde entidad reconocida", "value": "from_entity" },
+                { "label": "Desde texto libre", "value": "from_text" },
+                { "label": "Estrategia personalizada", "value": "custom" }
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Estrategia de extraccion",
+              "type": "Campo descriptivo",
+              "copy": "Define como se obtiene el valor del slot desde el mensaje del usuario.",
+              "note": "Ayuda a alinear la implementacion tecnica con la intencion funcional del flujo."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Validacion",
+            "dataColumn": "validacion",
+            "type": "text",
+            "help": {
+              "title": "Regla de validacion",
+              "type": "Campo descriptivo",
+              "copy": "Escribe la regla que debe cumplir el valor (por ejemplo, numero positivo).",
+              "note": "Documenta criterios de calidad del dato para evitar decisiones con informacion invalida."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Si falta, repregunta",
+            "dataColumn": "si_falta_repregunta",
+            "type": "text",
+            "help": {
+              "title": "Texto de repregunta",
+              "type": "Campo descriptivo",
+              "copy": "Escribe la pregunta que hara el bot cuando no logre obtener esta entidad.",
+              "note": "Una repregunta clara mejora la experiencia y reduce fallbacks por baja comprension."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva entidad/slot",
+      "createLabel": "Guardar nueva entidad/slot",
+      "updateLabel": "Actualizar entidad/slot"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda contextual",
+    "defaultTitle": "Ayuda contextual",
+    "defaultType": "Campo descriptivo",
+    "defaultCopy": "Selecciona un campo para ver que debes registrar y como ese dato afecta el comportamiento del chatbot.",
+    "defaultNote": "La ayuda indica si el campo impacta directamente el modelo o si solo documenta decisiones del proceso.",
+    "summary": [
+      "Define entidades y slots con nombres tecnicos claros y unicos.",
+      "Relaciona cada dato con el estado del flujo donde se necesita.",
+      "Especifica validaciones y repreguntas para manejar datos faltantes."
+    ]
+  },
+  "tableConfig": {
+    "title": "Entidades y slots registrados ({count})",
+    "columns": [
+      {
+        "label": "Entidad",
+        "dataColumn": "entidad",
+        "width": {
+          "type": "min",
+          "value": 150
+        },
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      {
+        "label": "Estado",
+        "dataColumn": "estado_donde_aplica",
+        "width": {
+          "type": "min",
+          "value": 150
+        }
+      },
+      {
+        "label": "Slot",
+        "dataColumn": "slot",
+        "width": {
+          "type": "min",
+          "value": 180
+        }
+      },
+      {
+        "label": "Tipo",
+        "dataColumn": "tipo_slot",
+        "width": {
+          "type": "min",
+          "value": 95
+        },
+        "style": {
+          "textAlign": "center"
+        }
+      },
+      {
+        "label": "Obligatoria",
+        "dataColumn": "obligatoria",
+        "width": {
+          "type": "min",
+          "value": 95
+        },
+        "style": {
+          "textAlign": "center"
+        }
+      },
+      {
+        "label": "Validacion",
+        "dataColumn": "validacion",
+        "width": {
+          "type": "flex",
+          "value": 1
+        },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "intenciones": {
+      "label": "Anterior: Intenciones",
+      "href": "./formulario.html?config=03_intenciones.formulario.json"
+    },
+    "respuestas": {
+      "label": "Siguiente: Respuestas",
+      "href": "./formulario.html?config=05_respuestas.formulario.json"
+    }
+  },
+  "prev": "intenciones",
+  "next": "respuestas"
+}

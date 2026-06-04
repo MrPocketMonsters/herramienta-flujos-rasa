@@ -136,7 +136,7 @@ def build_responses(respuestas_rows: list[dict[str, str]]) -> str:
     for row in respuestas_rows:
         rid = row["respuesta_id"]
         base = row.get("texto_base", "")
-        variants = parse_variants(row.get("variantes_1_3", ""))
+        variants = parse_variants(row.get("variantes", ""))
         if base:
             grouped[rid].append(base)
         grouped[rid].extend(variants)

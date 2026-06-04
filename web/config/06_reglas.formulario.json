@@ -1,0 +1,155 @@
+{
+  "page": {
+    "badge": "RL",
+    "title": "Registro de Reglas",
+    "subtitle": "Define las reglas que controlan transiciones y pasos compuestos del flujo."
+  },
+  "dataPath": "06_reglas.csv",
+  "formConfig": {
+    "title": "6) Registro de reglas",
+    "helper": "Describe cuándo debe aplicarse una regla y qué pasos siguen la conversación.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Rule name (nombre técnico)",
+            "dataColumn": "rule_name",
+            "type": "text",
+            "unique": true,
+            "regex": "^[a-zA-Z0-9_ ]+$",
+            "help": {
+              "title": "Nombre de la regla",
+              "type": "Importante",
+              "copy": "Nombre corto y claro para identificar esta regla (p. ej. Transicion_presupuesto).",
+              "note": "Este nombre se usa en los archivos del proyecto; evita cambiarlo sin avisar al equipo."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Condición(es)",
+            "dataColumn": "condicion",
+            "type": "text",
+            "help": {
+              "title": "Condición(es)",
+              "type": "Descripción",
+              "copy": "Escribe la(s) condición(es) que deben cumplirse para que esta regla se aplique. Si hay varias, sepáralas con '>' (p. ej. no hay formulario activo > se guardó el tipo de docente).",
+              "note": "Describe en lenguaje sencillo cuándo debe activarse la regla."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Qué diría el usuario (intenciones)",
+            "dataColumn": "steps_intents",
+            "type": "textarea",
+            "help": {
+              "title": "Intenciones (en orden)",
+              "type": "Descripción",
+               "copy": "Describe las formas en que el usuario podría expresarse, en el orden que ocurren; sepáralas con '>' (p. ej. informar tipo docente > informar necesidades docentes).",
+              "note": "Si no aplica, déjalo en blanco. Estas frases ayudan a entender la secuencia de la conversación."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Qué hará el sistema (acciones/respuestas)",
+            "dataColumn": "steps_actions",
+            "type": "textarea",
+            "help": {
+              "title": "Acciones o respuestas (en orden)",
+              "type": "Descripción",
+               "copy": "Escribe las respuestas o acciones que debe hacer el sistema en ese momento, separadas por '>' en el orden correspondiente (p. ej. mostrar reporte de necesidades > validar presupuesto).",
+               "note": "Si conoces el nombre técnico de la respuesta, ponlo; si no, describe brevemente lo que debe decir o hacer el sistema."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Notas / Comentarios",
+            "dataColumn": "notas",
+            "type": "textarea",
+            "help": {
+              "title": "Notas",
+              "type": "Descripción",
+              "copy": "Anota aclaraciones, excepciones o indicaciones para quien implemente o revise la regla.",
+              "note": "Es información para el equipo; aquí puedes explicar casos especiales o ejemplos."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva regla",
+      "createLabel": "Guardar nueva regla",
+      "updateLabel": "Actualizar regla"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda rápida",
+    "defaultTitle": "Cómo completar este formulario",
+    "defaultType": "Guía",
+    "defaultCopy": "Selecciona un campo y lee la explicación clara de qué debes escribir. Si no estás seguro, pregunta al responsable del flujo.",
+    "defaultNote": "Las reglas sirven para decir cuándo y cómo debe continuar una conversación. Aquí las documentamos de forma comprensible.",
+    "summary": [
+      "Escribe condiciones en la columna 'Condición(es)'; separa varias con '>' si aplica.",
+      "En 'Qué diría el usuario' pon las frases o intenciones en orden; en 'Qué hará el sistema' pon las respuestas esperadas.",
+      "Si no conoces el nombre técnico de una respuesta, describe brevemente lo que debe decir o hacer."
+    ]
+  },
+  "tableConfig": {
+    "title": "Reglas registradas ({count})",
+    "columns": [
+      {
+        "label": "Regla",
+        "dataColumn": "rule_name",
+        "width": { "type": "min", "value": 220 },
+        "style": { "fontWeight": "bold" }
+      },
+      {
+        "label": "Condición",
+        "dataColumn": "condicion",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Intents",
+        "dataColumn": "steps_intents",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Actions",
+        "dataColumn": "steps_actions",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Notas",
+        "dataColumn": "notas",
+        "width": { "type": "min", "value": 200 },
+        "wordWrap": true
+      }
+    ]
+  },
+  "routes": {
+    "prev": {
+      "label": "Anterior: Respuestas",
+      "href": "./formulario.html?config=05_respuestas.formulario.json"
+    },
+    "next": {
+      "label": "Siguiente: Historias",
+      "href": "./formulario.html?config=07_historias.formulario.json"
+    }
+  },
+  "prev": "prev",
+  "next": "next"
+}

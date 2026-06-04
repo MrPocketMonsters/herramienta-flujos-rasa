@@ -5,6 +5,7 @@ import {
   renderForm,
   renderTable,
   renderNavigation,
+  renderCarousel,
   setPageInfo,
   wireContextPanel,
   setYear,
@@ -13,6 +14,7 @@ import {
   loadFormByIndex
 } from './render/render.js';
 import { filterRowsByFlow, resolveFieldOptions } from './options.js';
+import { FLOW_FORM_CONFIG_DATA_PATH } from '../../config/config.js';
 
 // Plantilla dinamica para renderizar formularios configurables desde JSON + CSV.
 (function () {
@@ -33,7 +35,6 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       setYear();
 
       var configPath = getConfigPath();
-      flowId = getFlowId();
       configUrl = new URL(configPath, window.location.href);
       var configText = await loadText(configUrl.href);
       if (!(configText && configText.startsWith("{"))) {
@@ -45,7 +46,9 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       if (!dataPath) {
         throw new Error("La configuracion no incluye dataPath.");
       }
+      flowId = initFlowId();
 
+      setPageInfo(config);
       await reloadState(null);
       renderNavigation(config);
       wireContextPanel();
@@ -55,6 +58,17 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     }
   }
 
+  function isFlowView() {
+    return dataPath == FLOW_FORM_CONFIG_DATA_PATH;
+  }
+
+  function initFlowId() {
+    if (isFlowView())
+      return "";
+
+    return getFlowId() || "";
+  }
+
   async function reloadState(selectedGlobalIndex) {
     var csvText = await loadDataText(dataPath, configUrl.href);
     var parsed = toObjects(parseCsv(csvText));
@@ -62,7 +76,8 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     descRow = dataRows.shift() || {};
     headers = parsed[1] || [];
 
-    flowEntries = filterRowsByFlow(dataRows, flowId, { strict: false });
+    const filterFlowId = isFlowView() ? "" : flowId;
+    flowEntries = filterRowsByFlow(dataRows, filterFlowId, { strict: false });
     visibleRows = flowEntries.map(function (entry) {
       return entry.row;
     });
@@ -74,7 +89,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
 
     if (Number.isFinite(selectedGlobalIndex)) {
       currentGlobalIndex = selectedGlobalIndex;
-      loadFormByIndex(config, dataRows, selectedGlobalIndex, saveRow);
+      loadFormByIndex(config, dataRows, selectedGlobalIndex, saveRow, fieldOptions);
     } else {
       currentGlobalIndex = null;
     }
@@ -83,11 +98,16 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
   function loadRow(index) {
     var selectedEntry = flowEntries[index] || { globalIndex: index };
     currentGlobalIndex = selectedEntry.globalIndex;
-    loadFormByIndex(config, dataRows, selectedEntry.globalIndex, saveRow);
+    loadFormByIndex(config, dataRows, selectedEntry.globalIndex, saveRow, fieldOptions);
+
+    if (isFlowView()) {
+      flowId = selectedEntry.row.flujo_id || "";
+      renderCarousel(config, flowId);
+    }
   }
 
   async function saveRow(index, formData) {
-    if (flowId)
+    if (!isFlowView() && flowId)
       formData.flujo_id = flowId;
 
     if (!validate(formData, index))
@@ -105,6 +125,11 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     await saveDataText(dataPath, toCsv(dataRows, headers));
     await reloadState(currentGlobalIndex);
     showSuccess("Los datos se han guardado correctamente.", "Guardado exitoso");
+
+    if (isFlowView()) {
+      flowId = formData.flujo_id || flowId;
+      renderCarousel(config, flowId);
+    }
   }
 
   function validate(formData, index) {
@@ -118,6 +143,7 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
   function validateColumn(dataColumn, index, newValue) {
     try {
       checkUnique(dataColumn, index, newValue);
+      checkRegex(dataColumn, newValue);
       checkLimits(dataColumn, newValue);
       return true;
     } catch (error) {
@@ -127,12 +153,16 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
     }
   }
 
-  function checkLimits(dataColumn, newValue) {
-    var field = config.formConfig.rows.reduce((acc, row) =>
-          acc.concat(row.fields || [])
-        , [])
-        .find((f) => (f.dataColumn === dataColumn) && f.limits)
+  function findFieldConfig(dataColumn, configParam) {
+    return config.formConfig.rows.reduce((acc, row) =>
+          acc.concat(row.fields || []),
+          []
+        )
+        .find((f) => f.dataColumn === dataColumn && f[configParam]);
+  }
 
+  function checkLimits(dataColumn, newValue) {
+    var field = findFieldConfig(dataColumn, "limits");
     if (!field)
       return;
 
@@ -157,12 +187,20 @@ import { filterRowsByFlow, resolveFieldOptions } from './options.js';
       throw new Error(`El valor '${newValue}' para el campo '${field.label}' es mayor al máximo permitido (${max}).`);
   }
 
-  function checkUnique(dataColumn, index, newValue) {
-    var field = config.formConfig.rows.reduce((acc, row) =>
-          acc.concat(row.fields || [])
-        , [])
-        .find((f) => (f.dataColumn === dataColumn) && f.unique)
+  function checkRegex(dataColumn, newValue) {
+    var field = findFieldConfig(dataColumn, "regex");
+    if (!field)
+      return;
 
+    var regexPattern = field.regex;
+    var regex = new RegExp(regexPattern);
+    if (!regex.test(newValue)) {
+      throw new Error(`El valor '${newValue}' para el campo '${field.label}' no cumple con el formato requerido.`);
+    }
+  }
+
+  function checkUnique(dataColumn, index, newValue) {
+    var field = findFieldConfig(dataColumn, "unique");
     if (!field)
       return;
 

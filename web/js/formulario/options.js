@@ -105,7 +105,14 @@ export async function resolveFieldOptions(config, mainDataRows, configBaseUrl, f
 
       var resolvedOptions = [];
       staticValues.forEach(function (value) {
-        uniquePush(resolvedOptions, value);
+        // support two formats: simple string or object {label, value}
+        if (value && typeof value === 'object' && value.value) {
+          // push object with label/value if not duplicate by value
+          var exists = resolvedOptions.some(function (o) { return (o && o.value) ? String(o.value) === String(value.value) : String(o) === String(value.value); });
+          if (!exists) resolvedOptions.push({ label: String(value.label || value.value), value: String(value.value) });
+        } else {
+          uniquePush(resolvedOptions, value);
+        }
       });
 
       for (var k = 0; k < dynamicValues.length; k += 1) {

@@ -1,0 +1,191 @@
+{
+  "page": {
+    "badge": "FD",
+    "title": "Registro de Fuentes de Información",
+    "subtitle": "Indica de dónde sale cada dato que necesita el flujo y quién lo mantiene."
+  },
+  "dataPath": "08_fuentes_datos.csv",
+  "formConfig": {
+    "title": "8) Registro de fuentes de información",
+    "helper": "Describe en palabras simples de dónde se toma cada dato y qué hacer si no está disponible.",
+    "rows": [
+      {
+        "fields": [
+          {
+            "label": "Dato que se necesita",
+            "dataColumn": "dato",
+            "type": "text",
+            "unique": true,
+            "help": {
+              "title": "Dato que se necesita",
+              "type": "Importante",
+              "copy": "Escribe el nombre claro del dato que el flujo necesita obtener, por ejemplo: tipo de docente o presupuesto.",
+              "note": "Usa un nombre comprensible para cualquier persona del equipo."
+            }
+          },
+          {
+            "label": "Tipo de fuente",
+            "dataColumn": "fuente_tipo",
+            "type": "select",
+            "options": {
+              "staticValues": [
+                "Archivo",
+                "Formulario",
+                "Sistema",
+                "Documento",
+                "Persona o área responsable",
+                "Otro"
+              ],
+              "allowCustom": true
+            },
+            "help": {
+              "title": "Tipo de fuente",
+              "type": "Descripción",
+              "copy": "Elige la clase de lugar o medio donde se encuentra ese dato.",
+              "note": "No necesitas usar lenguaje técnico; basta con que se entienda de dónde sale la información."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Dónde se encuentra",
+            "dataColumn": "fuente_ubicacion",
+            "type": "textarea",
+            "help": {
+              "title": "Dónde se encuentra",
+              "type": "Descripción",
+              "copy": "Indica el lugar exacto donde alguien debe buscar ese dato, por ejemplo el nombre del archivo, formulario o sistema.",
+              "note": "Sirve para que otra persona pueda encontrar la fuente sin pedir más aclaraciones."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Campo o sección a revisar",
+            "dataColumn": "campo_tabla",
+            "type": "textarea",
+            "help": {
+              "title": "Campo o sección",
+              "type": "Descripción",
+              "copy": "Escribe el nombre de la columna, campo o parte del documento donde aparece ese dato.",
+              "note": "Esto ayuda a ubicar la información con rapidez cuando se revisa la fuente."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Cuándo se considera válida",
+            "dataColumn": "criterio_vigencia",
+            "type": "textarea",
+            "help": {
+              "title": "Cuándo se considera válida",
+              "type": "Descripción",
+              "copy": "Explica cómo saber si la información sigue siendo confiable y actual.",
+              "note": "Escribe una regla fácil de entender, como 'la última versión aprobada' o 'el registro más reciente'."
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "label": "Quién la mantiene",
+            "dataColumn": "responsable",
+            "type": "text",
+            "help": {
+              "title": "Quién la mantiene",
+              "type": "Descripción",
+              "copy": "Indica el área, equipo o cargo que cuida y actualiza esa fuente.",
+              "note": "Ayuda a saber a quién acudir si la información cambia o presenta dudas."
+            }
+          },
+          {
+            "label": "Qué hacer si no está disponible",
+            "dataColumn": "accion_si_no_disponible",
+            "type": "textarea",
+            "help": {
+              "title": "Qué hacer si no está disponible",
+              "type": "Descripción",
+              "copy": "Escribe qué debe hacer el equipo si esa fuente no puede consultarse o está incompleta.",
+              "note": "Puede ser una repregunta, una espera, una derivación o cualquier paso de contingencia."
+            }
+          }
+        ]
+      }
+    ],
+    "actions": {
+      "newLabel": "Nueva fuente de información",
+      "createLabel": "Guardar nueva fuente",
+      "updateLabel": "Actualizar fuente"
+    }
+  },
+  "contextConfig": {
+    "eyebrow": "Ayuda rápida",
+    "defaultTitle": "Cómo completar este formulario",
+    "defaultType": "Guía",
+    "defaultCopy": "Describe cada fuente con palabras claras para que cualquier persona pueda ubicarla sin ayuda técnica.",
+    "defaultNote": "La idea es dejar documentado de dónde sale cada dato y qué hacer si la fuente falla.",
+    "summary": [
+      "Escribe el dato con un nombre sencillo y entendible.",
+      "Explica dónde buscarlo y quién se encarga de mantenerlo.",
+      "Aclara qué debe pasar si la fuente no está disponible."
+    ]
+  },
+  "tableConfig": {
+    "title": "Fuentes de información registradas ({count})",
+    "columns": [
+      {
+        "label": "Dato",
+        "dataColumn": "dato",
+        "width": { "type": "min", "value": 180 },
+        "style": { "fontWeight": "bold" }
+      },
+      {
+        "label": "Tipo",
+        "dataColumn": "fuente_tipo",
+        "width": { "type": "min", "value": 150 }
+      },
+      {
+        "label": "Ubicación",
+        "dataColumn": "fuente_ubicacion",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Campo o sección",
+        "dataColumn": "campo_tabla",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Vigencia",
+        "dataColumn": "criterio_vigencia",
+        "width": { "type": "flex", "value": 1 },
+        "wordWrap": true
+      },
+      {
+        "label": "Responsable",
+        "dataColumn": "responsable",
+        "width": { "type": "min", "value": 150 }
+      }
+    ]
+  },
+  "routes": {
+    "historias": {
+      "label": "Anterior: Historias",
+      "href": "./formulario.html?config=07_historias.formulario.json"
+    },
+    "validacion": {
+      "label": "Siguiente: Validación",
+      "href": "./formulario.html?config=09_checklist_validacion.formulario.json"
+    }
+  },
+  "prev": "historias",
+  "next": "validacion"
+}
