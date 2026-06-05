@@ -19,7 +19,6 @@ La lectura y escritura de archivos se implementa en [src-tauri/src/main.rs](../s
 
 ### En una página HTML simple
 
-
 Puesto que las rutas se resuelven relativamente a `data/`, el frontend debe proporcionar únicamente el nombre de archivo o la ruta relativa dentro de `data/`. Tauri resuelve la ubicación correspondiente en el sistema de archivos.
 
 Como [src-tauri/tauri.conf.json](../src-tauri/tauri.conf.json) activa `withGlobalTauri`, los comandos pueden ser invocados desde HTML/JS empaquetado de la forma siguiente:
@@ -73,7 +72,6 @@ Ejemplos no válidos:
 - `C:\\algo\\archivo.csv`
 
 ## Configuración necesaria en Tauri
-
 
 La ventana principal queda habilitada para invocar los comandos internos.
 
