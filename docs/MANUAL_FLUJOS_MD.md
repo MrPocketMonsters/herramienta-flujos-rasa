@@ -33,14 +33,14 @@ El sistema usa **"Inteligencia Artificial"** únicamente como una herramienta de
 El sistema actúa como una interfaz de representación; el conocimiento reside en las bases de datos transaccionales administradas por las unidades institucionales.
 
 | Componente Funcional | Origen de los Datos | Propietario Funcional | Riesgo de Integridad (Impacto Operativo) |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Catálogo Académico** | BD Oracle (Tabla `POSTGRADOS`) | Coordinación Académica | Presentación de oferta educativa inactiva; omisión de programas recientes. |
 | **Base de Conocimiento (FAQ)** | BD Oracle (Tabla `FAQ`) | Atención al Estudiante | Entrega de información desactualizada (ej. calendarios vencidos); aumento de fallos de interpretación (Fallback). |
 | **Gestión de Excepciones** | Lineamientos Internos de SAC | Soporte Técnico / SAC | Generación de bucles conversacionales (loops) sin resolución ni derivación efectiva. |
 
 ## Metodología para la Estructuración de Nuevos Flujos
 
-Toda solicitud de ampliación de la capacidad conversacional (ej. adición del proceso de *vinculación especial de docentes nuevos*) requiere radicar un diseño previo compatible con RASA. El gestor de información no debe diseñar el asistente para ejecutar el proceso, sino para _explicar cómo debe realizarse_; por tanto, debe describir también _cuándo_, _con qué condición_, _a partir de qué entidades_ y _desde qué fuente de verdad_ debe activarse cada respuesta informativa.
+Toda solicitud de ampliación de la capacidad conversacional (ej. adición del proceso de _vinculación especial de docentes nuevos_) requiere radicar un diseño previo compatible con RASA. El gestor de información no debe diseñar el asistente para ejecutar el proceso, sino para _explicar cómo debe realizarse_; por tanto, debe describir también _cuándo_, _con qué condición_, _a partir de qué entidades_ y _desde qué fuente de verdad_ debe activarse cada respuesta informativa.
 
 ### Matriz de Definición Funcional
 
@@ -53,7 +53,7 @@ Toda solicitud de ampliación de la capacidad conversacional (ej. adición del p
    - Condición de salida.
    - Estado siguiente.
 
-   Ejemplo: *consulta inicial* → *explicación del paso correspondiente* → *indicar qué debe remitir el proyecto curricular* → *explicar validación presupuestal* → *explicar revisión documental* → *cierre informativo*.
+   Ejemplo: _consulta inicial_ → _explicación del paso correspondiente_ → _indicar qué debe remitir el proyecto curricular_ → _explicar validación presupuestal_ → _explicar revisión documental_ → _cierre informativo_.
 
 3. **Intenciones de Transición:** Identificación de las intenciones que mueven el flujo entre estados. Deben separarse las intenciones de entrada, continuidad, confirmación, corrección y salida. Para cada intención se deben incluir al menos 5 ejemplos de redacción realista del usuario, usando la misma lógica del proceso de vinculación. Ejemplos de transición: "cómo se sabe si el docente es antiguo", "qué debe hacer el proyecto curricular", "qué tipo y número de docentes se informa", "cómo se valida el presupuesto", "qué pasa si los documentos no cumplen".
 
@@ -97,10 +97,10 @@ Antes de enviar un requerimiento al equipo técnico, el gestor de información d
 ### Matriz de Diagnóstico y Resolución
 
 | Incidencia Reportada (Síntoma) | Diagnóstico Operativo | Acción Correctiva Preventiva |
-|---|---|---|
-| *El sistema entrega información de admisiones al consultar por costos.* | **Colisión Probabilística.** Solapamiento léxico en la base de entrenamiento para las respectivas intenciones (ejemplos demasiado parecidos). | Incrementar la diferenciación en el conjunto de ejemplos, reportando frases específicas al área técnica. |
-| *El sistema expone valores financieros de la vigencia anterior.* | **Fallo Determinístico.** Desactualización del registro estático en la fuente de verdad. | Ejecutar la modificación inmediata del valor en la tabla correspondiente de Oracle APEX. |
-| *Devolución excesiva de la respuesta "No comprendo su consulta".* | **Déficit de Cobertura.** Empleo de terminología, derivaciones, jerga, o consultas no contempladas en el entrenamiento base. | Recopilar registros fallidos del historial transaccional, clasificarlos e indexarlos para futura carga de base de conocimiento. |
+| --- | --- | --- |
+| _El sistema entrega información de admisiones al consultar por costos._ | **Colisión Probabilística.** Solapamiento léxico en la base de entrenamiento para las respectivas intenciones (ejemplos demasiado parecidos). | Incrementar la diferenciación en el conjunto de ejemplos, reportando frases específicas al área técnica. |
+| _El sistema expone valores financieros de la vigencia anterior._ | **Fallo Determinístico.** Desactualización del registro estático en la fuente de verdad. | Ejecutar la modificación inmediata del valor en la tabla correspondiente de Oracle APEX. |
+| _Devolución excesiva de la respuesta "No comprendo su consulta"._ | **Déficit de Cobertura.** Empleo de terminología, derivaciones, jerga, o consultas no contempladas en el entrenamiento base. | Recopilar registros fallidos del historial transaccional, clasificarlos e indexarlos para futura carga de base de conocimiento. |
 
 ### Chequeo de Viabilidad de Datos
 

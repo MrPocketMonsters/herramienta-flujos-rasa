@@ -21,7 +21,7 @@ Permitir que el gestor de informacion diligencie un unico archivo Excel con una 
 ## Hojas del workbook y CSV asociados
 
 | # | Hoja Excel | CSV asociado | Procesada por compilador | Descripcion |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 0 | `00_introduccion_libro` | `00_introduccion_libro.csv` | No | Contexto general del libro de trabajo y uso recomendado para diligenciamiento. |
 | 1 | `01_resumen_flujo` | `01_resumen_flujo.csv` | Si | Resume el objetivo y los limites del flujo para alinear alcance funcional y criterio de cierre. |
 | 2 | `02_estados` | `02_estados.csv` | Si | Define la maquina de estados del flujo y las transiciones esperadas entre etapas. |
@@ -63,22 +63,22 @@ El compilador `tools/compilar_flujo_csv.py` lee los CSV de esta carpeta, ignora 
 2. Validar internamente con el checklist.
 3. Exportar el workbook a CSV:
 
-```bash
-python3 tools/xlsx_a_csv.py --workbook data/flujo_conversacional.xlsx --output-dir data
-```
+    ```bash
+    python3 tools/xlsx_a_csv.py --workbook data/flujo_conversacional.xlsx --output-dir data
+    ```
 
 4. Ejecutar el compilador sobre CSV:
 
-```bash
-python3 tools/compilar_flujo_csv.py --csv-dir data --output-dir build
-```
+    ```bash
+    python3 tools/compilar_flujo_csv.py --csv-dir data --output-dir build
+    ```
 
 5. Revisar salida en `build/<flujo_id>/`.
 6. Trasladar snippets a:
-   - `data/nlu.yml`
-   - `data/rules.yml`
-   - `data/stories.yml`
-   - `domain.yml` (intents/responses/slots si aplica)
+    - `data/nlu.yml`
+    - `data/rules.yml`
+    - `data/stories.yml`
+    - `domain.yml` (intents/responses/slots si aplica)
 
 ## Salidas generadas
 

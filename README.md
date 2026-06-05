@@ -76,9 +76,9 @@ El objetivo de la aplicación web es reducir los tiempos de desarrollo iterativo
 
 Al distribuirse la aplicación compilada se entregan los siguientes elementos:
 
-```
-herramienta-flujos-rasa      (ejecutable)
-data/                        (carpeta con CSV)
+```text
+herramienta-flujos-rasa[.exe] (ejecutable)
+data/                         (carpeta con CSV)
 ```
 
 Los CSV contenidos en `data/` pueden ser modificados mediante la interfaz web integrada. Como resultado, la carpeta `data/` con los CSV actualizados queda disponible para alimentar el sistema Rasa; en iteraciones futuras se podrá admitir la exportación a XLSX.
@@ -145,17 +145,6 @@ python tools/compilar_flujo_csv.py --csv-dir data --output-dir build
 ### Para empaquetar y compilar la app
 
 Ver instrucciones completas en [docs/TAURI_BUILD.md](docs/TAURI_BUILD.md).
-
-Resumen rápido:
-
-```bash
-# Compilar la app
-cd src-tauri
-cargo tauri dev        # Modo desarrollo (hot-reload)
-cargo tauri build      # Modo release (ejecutable final)
-```
-
-El binario final estará en `src-tauri/target/release/herramienta-flujos-rasa` (Linux) o `.exe` (Windows).
 
 Si es claro lo que está sucediendo, para pruebas rápidas se puede usar el script `build-and-run.sh` que compila la app, la mueve a la raíz del proyecto y la ejecuta:
 

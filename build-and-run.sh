@@ -54,8 +54,8 @@ main() {
     exit 1
   fi
 
-  cp "$file_path" ../herramienta-flujos-rasa
-  echo "Binario copiado a la raíz del proyecto: herramienta-flujos-rasa"
+  cp "$file_path" ../$(basename "$file_path")
+  echo "Binario copiado a la raíz del proyecto: $(basename "$file_path")"
 
   ../$(basename "$file_path") # Ejecutar el binario copiado
 }
